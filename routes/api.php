@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\MaireController;
 use App\Http\Controllers\Api\AdmincommuneController;
 
 /*
@@ -22,6 +23,17 @@ Route::put('admin_commune/archive/{id}',[AdmincommuneController::class, 'archive
 Route::post('admin_commune/create',[AdmincommuneController::class,'store']);
 //lister admin_commune
 Route::get('admin_commune/lister',[AdmincommuneController::class, 'index']);
+
+//lister maire
+Route::get('maire/lister',[MaireController::class, 'index']);
+
+//ajouter maire
+Route::post('maire/create',[MaireController::class,'store']);
+//pour modifier Maire
+Route::put('maire/edit/{id}',[MaireController::class,'update']);
+
+//pour achiver maire
+Route::put('maire/archive/{id}',[MaireController::class, 'archiver']);
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
