@@ -14,7 +14,8 @@ use App\Http\Controllers\Api\AdmincommuneController;
 | be assigned to the "api" middleware group. Make something great!
 |
 */
-
+//pour achiver admin_commune
+Route::put('admin_commune/archive/{id}',[AdmincommuneController::class, 'archiver']);
 //pour modifier admin_commune
  Route::put('admin_commune/edit/{id}',[AdmincommuneController::class,'update']);
 //ajouter admin_commune

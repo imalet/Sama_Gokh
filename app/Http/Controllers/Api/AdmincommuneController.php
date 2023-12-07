@@ -6,6 +6,7 @@ use Exception;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ArchiveAdmincommuneRequest;
 use App\Http\Requests\EditAdmincommuneRequest;
 use App\Http\Requests\CreateAdmincommuneRequest;
 
@@ -66,6 +67,27 @@ return response()->json([
       return response()->json($e);
     }
    }  
+
+   public function archiver($id)
+   {
+    
+    try{
+    $admincommune = User::find($id);
+    // dd($admincommune);
+    $admincommune->etat='inactif';
+    $admincommune->save();
+    
+    return response()->json([
+      'status_code' => 200,
+      'status_message' =>'admincommune a été archivé',
+      'data'=>$admincommune
+      ]);
+        }catch(Exception $e){
+          return response()->json($e);
+        }
+       } 
+
+   
 
  }
 
