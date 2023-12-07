@@ -28,7 +28,7 @@ Route::get('roles', [RoleController::class, 'index']);
 Route::post('/role/store',[RoleController::class,'store'])->name("role.add"); 
 
 // Modifier un role 
-Route::put('/role/{id}/update',[RoleController::class,'update'])->name("role.edit");
+Route::put('/role/update/{role}',[RoleController::class,'update'])->name("role.edit");
 
 
 

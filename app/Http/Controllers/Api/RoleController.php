@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateRoleRequest;
+use App\Http\Requests\UpdateRoleRequest;
 use App\Models\Role;
 use Exception;
 use Illuminate\Http\Request;
@@ -73,9 +74,32 @@ class RoleController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    // public function update(UpdateRoleRequest $request, $id)
+    // {
+     
+    //     $role = Role::find($id);
+    //     $role->nom = $request->nom;
+    //     $role->update();
+    //     // dd($role);
+    // }
+
+    public function update(UpdateRoleRequest $request, Role $role)
     {
-        // 
+      try{
+        $role->nom = $request->nom;
+        $role->update();
+        // return 'updated';
+        // $role->save();
+        return response()->json([
+            'statut_code'=>200,
+            'statut_message'=>'Le rôle a été modifié avec succès',
+            'statut_code'=> $role ,
+        ]);
+
+      } catch(Exception $e) {
+        
+        return response()->json($e);
+      };
     }
 
     /**
