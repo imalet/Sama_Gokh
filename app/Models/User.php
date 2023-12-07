@@ -3,6 +3,10 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+
+use App\Http\Controllers\AnnonceController;
+use App\Models\Annonce;
+use App\Models\Commentaire;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -42,4 +46,13 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function annonce(){
+        return $this->hasMany(Annonce::class);
+    }
+
+    public function commentaires(){
+        return $this->hasMany(Commentaire::class);
+    }
+    
 }
