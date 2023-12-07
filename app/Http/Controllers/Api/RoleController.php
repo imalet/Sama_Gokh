@@ -14,9 +14,37 @@ class RoleController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        return 'Liste des rôles';
+        // return 'Liste des rôles';
+        try {
+          
+        $query = Role::query();
+        $perPage = 6; 
+        $page = $request->input('page', 1);
+        $search = $request->input('search');
+
+        if ($search) {
+            $query = $query->whereRaw("nom LIKE '%". $search . "%'");
+        }
+        
+        $totalRole = $query->count();
+
+        $resultat = $query->offset(($page -6) *$perPage)->limit($page)->get(); 
+        
+
+            return response()->json([
+            'statut_message'=> 'Toutes les villes on été récupérées.',
+            'statut_code'=>200,
+            // 'statut_code'=> Ville::all() ,
+            'current_page' => $page,
+            'last_page' =>ceil($totalRole / $perPage),
+            'items' => $resultat 
+        ]);
+
+        } catch(Exception $e) {
+            response()->json($e);   
+        }
 
     }
 

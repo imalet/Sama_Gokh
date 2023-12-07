@@ -42,7 +42,9 @@ class UpdateVilleRequest extends FormRequest
     public function messages()
     {
         return [
-            'nom.required' => 'Le nom du ville est obligatoire, veuillez le renseigner.'
+            'nom.required' => 'Le nom de la ville est obligatoire, veuillez le renseigner.',
+            'nom.max' => 'Le nom de la ville ne peut pas dépasser 50 caractères.',
+            'nom.unique' => 'Ce nom de ville est déjà enrégistré, veuillez en choisir un autre.',
             ];
     }
 }
