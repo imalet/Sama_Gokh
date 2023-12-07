@@ -9,11 +9,26 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\ArchiveAdmincommuneRequest;
 use App\Http\Requests\EditAdmincommuneRequest;
 use App\Http\Requests\CreateAdmincommuneRequest;
-
+use PhpParser\Node\Stmt\TryCatch;
 
 class AdmincommuneController extends Controller
 {
- 
+  public function index()
+  {
+    try{
+      return response()->json([
+        'status_code' => 200,
+        'status_message' =>'admincommune a été recupéré',
+        'data'=> User::all(),
+        ]);
+    }
+  
+  Catch(Exception $e){
+    return response()->json($e);
+  }
+  
+  
+}
  public function store(CreateAdmincommuneRequest $request)
   {
     try{
@@ -73,7 +88,6 @@ return response()->json([
     
     try{
     $admincommune = User::find($id);
-    // dd($admincommune);
     $admincommune->etat='inactif';
     $admincommune->save();
     

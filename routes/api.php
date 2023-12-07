@@ -20,6 +20,8 @@ Route::put('admin_commune/archive/{id}',[AdmincommuneController::class, 'archive
  Route::put('admin_commune/edit/{id}',[AdmincommuneController::class,'update']);
 //ajouter admin_commune
 Route::post('admin_commune/create',[AdmincommuneController::class,'store']);
+//lister admin_commune
+Route::get('admin_commune/lister',[AdmincommuneController::class, 'index']);
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
