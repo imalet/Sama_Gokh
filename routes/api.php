@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\Api\RoleController;
+use App\Http\Controllers\Api\VilleController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -21,6 +21,8 @@ use Illuminate\Support\Facades\Route;
 //     return 'Here is the link.';
 // });
 
+// Les Routes de Rôles 
+
 // Afficher Liste Role 
 Route::get('roles', [RoleController::class, 'index']);
 
@@ -29,6 +31,19 @@ Route::post('/role/store',[RoleController::class,'store'])->name("role.add");
 
 // Modifier un role 
 Route::put('/role/update/{role}',[RoleController::class,'update'])->name("role.edit");
+
+// ----------------------------------------------------------------------------------------------------------
+// ----------------------------------------------------------------------------------------------------------
+
+// Les Routes de Villes 
+// Afficher Liste Villes 
+Route::get('villes', [VilleController::class, 'index']);
+
+// Ajouter un ville dans la base de données 
+Route::post('/ville/store',[VilleController::class,'store'])->name("ville.add"); 
+
+// Modifier un ville 
+Route::put('/ville/update/{ville}',[VilleController::class,'update'])->name("ville.edit");
 
 
 

@@ -3,20 +3,20 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\CreateRoleRequest;
-use App\Http\Requests\UpdateRoleRequest;
-use App\Models\Role;
+use App\Http\Requests\CreateVilleRequest;
+use App\Http\Requests\UpdateVilleRequest;
+use App\Models\Ville;
 use Exception;
 use Illuminate\Http\Request;
 
-class RoleController extends Controller
+class VilleController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return 'Liste des rôles';
+        return 'Liste des villes';
 
     }
 
@@ -31,22 +31,22 @@ class RoleController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(CreateRoleRequest $request)
+    public function store(CreateVilleRequest $request)
     {
         // dd($request);
         
        try{
 
-        $role = new Role();
+        $ville = new Ville();
 
-        $role->nom = $request->nom;
+        $ville->nom = $request->nom;
 
-        $role->save();
+        $ville->save();
 
         return response()->json([
             'statut_code'=>200,
-            'statut_message'=>'Nouveau rôle ajouté avec succès',
-            'statut_code'=> $role ,
+            'statut_message'=>'Nouvelle ville ajoutée avec succès',
+            'statut_code'=> $ville ,
         ]);
 
        } catch(Exception $e) {
@@ -74,26 +74,18 @@ class RoleController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    // public function update(UpdateRoleRequest $request, $id)
-    // {
-     
-    //     $role = Role::find($id);
-    //     $role->nom = $request->nom;
-    //     $role->update();
-    //     // dd($role);
-    // }
 
-    public function update(UpdateRoleRequest $request, Role $role)
+    public function update(UpdateVilleRequest $request, Ville $ville)
     {
       try{
-        $role->nom = $request->nom;
-        $role->update();
+        $ville->nom = $request->nom;
+        $ville->update();
         // return 'updated';
-        
+        // $ville->save();
         return response()->json([
             'statut_code'=>200,
-            'statut_message'=>'Le rôle a été modifié avec succès',
-            'statut_code'=> $role ,
+            'statut_message'=>'Le nom de la ville a été modifiée avec succès',
+            'statut_code'=> $ville ,
         ]);
 
       } catch(Exception $e) {
