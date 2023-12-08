@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
-class UserRegisterRequest extends FormRequest
+class EditCitizenRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -27,11 +27,11 @@ class UserRegisterRequest extends FormRequest
             'prenom' => 'required|max:255',
             'age'=> 'required',
             'email' => 'required|email',
-            'password'=> 'required|min:8',
-            'telephone'=> ['required', 'regex:/^\+221(77|78|76|70)\d{7}$/'],
+            // 'password'=> 'required',
+            'telephone'=> 'required|regex:/^\+221(77|78|76|70)\d{7}$/',
             'username' => 'required|max:255',
             'CNI' => 'required|numeric',
-             'sexe' => 'required'
+            'sexe' => 'required'
 
         ];
     }
@@ -42,9 +42,10 @@ class UserRegisterRequest extends FormRequest
             'prenom.required' => "Le prénom doit être renseigné",
             'age.required' => "L'age doit être renseigné",
             'telephone.required' => "Votre numéro doit être renseigné",
+            'telephone.regex' => "Ce numéro est invalide",
             'email.email' => "L'adresse email n'est pas valide",
             // 'email.exists'=> "L'email n'existe pas !",
-            'password.required' => "Le mot de passe est requis",
+            // 'password.required' => "Le mot de passe est requis",
             'username.required' => "Le nom d'utilisateur  est requis",
             // 'username.unique' => "Ce nom d'utilisateur existe déjà",
             'CNI.required' => "Le CNI  est requis",

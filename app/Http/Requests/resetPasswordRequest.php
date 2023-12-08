@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
-class LogUserRequest extends FormRequest
+class resetPasswordRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,7 +23,8 @@ class LogUserRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'username' => 'required|max:255',
+            'email' => 'sometimes|email',
+            'telephone'=> ['required', 'regex:/^\+221(77|78|76|70)\d{7}$/'],
             'password'=> 'required|min:8'
         ];
     }
@@ -31,10 +32,11 @@ class LogUserRequest extends FormRequest
     {
         return [
             
-            'username.required' => "Le nom d'utilisateur  est requis",
-            'username.max' => "Ce nom d'utilisateur est trop long",
+            // 'username.required' => "Le nom d'utilisateur  est requis",
+            // 'username.unique' => "Ce nom d'utilisateur existe déjà",
+            'telephone.regex' => "Ce numéro est invalide",
             'password.required' => "Le mot de passe de l'utilisateur  est requis",
-            'password.min' => "Le mot de passe doit contenir plus de 8 caractères"
+            'password.min' => "Le mot de passe doit au moins avoir 8 caractères"
         ];
     }
     public function failedValidation(Validator $validator){

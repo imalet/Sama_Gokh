@@ -23,8 +23,10 @@ return new class extends Migration
             $table->string('telephone');
             $table->string('etat')->default('actif');
             $table->string('username')->unique();
-            $table->string('CNI');
+            $table->integer('CNI');
             $table->enum('sexe', ['M', 'F']);
+            $table->unsignedBigInteger('commune_id');
+            $table->foreign('commune_id')->references('id')->on('roles');
             $table->timestamp('email_verified_at')->nullable();
             $table->rememberToken();
             $table->timestamps();

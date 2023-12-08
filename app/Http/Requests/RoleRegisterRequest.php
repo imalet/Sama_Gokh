@@ -23,14 +23,15 @@ class RoleRegisterRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'nom' => 'required'
+            'nom' => 'required|max:255'
 
         ];
     }
     public function messages()
     {
         return [
-            'nom.required' => "Le nom doit être renseigné"
+            'nom.required' => "Le nom doit être renseigné",
+            'nom.max' => "Ce nom dépasse le nombre de caractère"
             
         ];
     }
