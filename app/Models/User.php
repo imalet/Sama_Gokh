@@ -42,4 +42,11 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+    public function commune(){
+        return $this->belongsTo(Commune::class);
+    }
+
+    public function role(){
+        return $this->belongsTo(Role::class);
+    }
 }
