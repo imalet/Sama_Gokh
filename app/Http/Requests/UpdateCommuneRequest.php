@@ -22,10 +22,10 @@ class UpdateCommuneRequest extends FormRequest
     public function rules(): array
     {
         return [
-            // 'nom' => 'required|max:50',
-            // 'nombreCitoyen' => 'required|integer',
-            // 'image' => 'sometimes|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            // 'ville_id' => 'required|exists:villes,id',
+            'nom' => 'required|max:50',
+            'nombreCitoyen' => 'required|integer',
+            'image' => 'sometimes|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'ville_id' => 'required|exists:villes,id',
         ];
     }
 

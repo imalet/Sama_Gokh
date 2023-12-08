@@ -14,4 +14,10 @@ class Commune extends Model
         'image',
         'ville_id'
     ];
+
+    public function ville()
+{
+    return $this->belongsTo(Ville::class, 'ville_id');
+}
+
 }

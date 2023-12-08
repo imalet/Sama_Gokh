@@ -4,6 +4,12 @@ use App\Http\Controllers\Api\CommuneController;
 use App\Http\Controllers\Api\RoleController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\VilleController;
+use App\Http\Resources\CommuneResource;
+use App\Http\Resources\RoleResource;
+use App\Http\Resources\VilleResource;
+use App\Models\Commune;
+use App\Models\Role;
+use App\Models\Ville;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -65,6 +71,24 @@ Route::put('/commune/update/{commune}',[CommuneController::class,'update'])->nam
 // Test Ajouter User
 Route::post('/user/store',[UserController::class,'store']); 
 
+// Collection Ville
+Route::get('/ressource/villes', function(){
+    $villes = Ville::all();
+    return VilleResource::collection($villes);
+});
+
+// Collection commune
+Route::get('/ressource/communes', function(){
+    $communes = Commune::all();
+    return CommuneResource::collection($communes);
+});
+
+// Collection rôle
+Route::get('/ressource/roles', function(){
+    $roles = Role::all();
+    return RoleResource::collection($roles);
+});
+ 
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
