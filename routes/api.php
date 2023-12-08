@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\Api\CommuneController;
 use App\Http\Controllers\Api\RoleController;
+use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\VilleController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -22,7 +24,7 @@ use Illuminate\Support\Facades\Route;
 //     return 'Here is the link.';
 // });
 
-// Les Routes de Rôles 
+// Les Routes de Roles 
 
 // Afficher Liste Role 
 Route::get('roles', [RoleController::class, 'index']);
@@ -31,7 +33,7 @@ Route::get('roles', [RoleController::class, 'index']);
 Route::post('/role/store',[RoleController::class,'store'])->name("role.add"); 
 
 // Modifier un role 
-Route::put('/role/update/{role}',[RoleController::class,'update'])->name("role.edit");
+Route::put('/role/update/{role}',[RoleController::class,'update'])->name("role.update");
 
 // ----------------------------------------------------------------------------------------------------------
 // ----------------------------------------------------------------------------------------------------------
@@ -40,12 +42,28 @@ Route::put('/role/update/{role}',[RoleController::class,'update'])->name("role.e
 // Afficher Liste Villes 
 Route::get('villes', [VilleController::class, 'index']);
 
-// Ajouter un ville dans la base de données 
+// Ajouter une ville dans la base de données 
 Route::post('/ville/store',[VilleController::class,'store'])->name("ville.add"); 
 
-// Modifier un ville 
-Route::put('/ville/update/{ville}',[VilleController::class,'update'])->name("ville.edit");
+// Modifier une ville 
+Route::put('/ville/update/{ville}',[VilleController::class,'update'])->name("ville.update");
 
+
+// ----------------------------------------------------------------------------------------------------------
+// ----------------------------------------------------------------------------------------------------------
+
+// Les Routes de communes
+// Afficher Liste communes 
+Route::get('communes', [CommuneController::class, 'index']);
+
+// Ajouter une commune dans la base de données 
+Route::post('/commune/store',[CommuneController::class,'store'])->name("commune.add"); 
+
+// Modifier une commune 
+Route::put('/commune/update/{commune}',[CommuneController::class,'update'])->name("commune.update");
+
+// Test Ajouter User
+Route::post('/user/store',[UserController::class,'store'])->name("user.add"); 
 
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
