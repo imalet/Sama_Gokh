@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\Api\CommuneController;
 use App\Http\Controllers\Api\RoleController;
-use App\Http\Controllers\Api\UserController;
+// use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\VilleController;
 use App\Http\Resources\CommuneResource;
 use App\Http\Resources\RoleResource;
@@ -10,8 +10,10 @@ use App\Http\Resources\VilleResource;
 use App\Models\Commune;
 use App\Models\Role;
 use App\Models\Ville;
+// use App\Http\Controllers\Api\RoleController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,6 +25,11 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "api" middleware group. Make something great!
 |
 */
+// Les Routes de création de comptes utilisateurs et de création de roles
+Route::post('/register', [UserController::class, 'register']);
+Route::post('register/role', [RoleController::class, 'register']);
+//La Routes de connexion  d'un utilisateur
+Route::post('/login', [UserController::class, 'login']);
 
 // Lien qui permet aux applications clients(Angular, React, Node ...) de se connecter 
 
@@ -92,4 +99,29 @@ Route::get('/ressource/roles', function(){
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
+});
+ //Changer mon mot de passe []
+ Route::put('/reset/password', [UserController::class, 'resetPassword']);
+// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+//     return $request->user();
+//     //la route de deconnexion
+//     Route::post('/logout', [UserController::class, 'logout']);
+// });
+Route::middleware(['auth:sanctum', 'role:SuperAdmin'])->group(function(){
+   //la route de deconnexion
+     Route::post('/logout', [UserController::class, 'logout']);
+});
+
+Route::middleware(['auth:sanctum', 'role:Citoyen'])->group(function(){
+
+  //la gestion du profil d'un citoyen : 
+  //Modifier les informations de profils du  compte du citoyen
+  Route::put('/edit/citizen/{user}', [UserController::class, 'update']);
+  //Archiver leFs informations un compte citoyen
+  Route::put('/archive/citizen/{user}', [UserController::class, 'archive']);
+ 
+
+  //la route de deconnexion
+Route::post('/logout', [UserController::class, 'logout']);
+
 });

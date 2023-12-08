@@ -1,7 +1,5 @@
 <?php
 
-use App\Models\Commune;
-use App\Models\Role;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -15,15 +13,22 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('nom');
+            $table->unsignedBigInteger('role_id');
+            $table->foreign('role_id')->references('id')->on('roles');
+            $table->string('prenom');
+            $table->integer('age');
             $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->string('telephone');
+            $table->string('etat')->default('actif');
+            $table->string('username')->unique();
+            $table->integer('CNI');
+            $table->enum('sexe', ['M', 'F']);
+            $table->unsignedBigInteger('commune_id');
+            $table->foreign('commune_id')->references('id')->on('roles');
+            $table->timestamp('email_verified_at')->nullable();
             $table->rememberToken();
-            // $table->unsignedBigInteger('role_id');
-            $table->foreignIdFor(Role::class)->constrained()->onDelete('cascade');
-            // $table->unsignedBigInteger('commune_id');
-            $table->foreignIdFor(Commune::class)->constrained()->onDelete('cascade');
             $table->timestamps();
         });
     }
