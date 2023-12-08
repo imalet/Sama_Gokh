@@ -1,8 +1,11 @@
 <?php
 
 use App\Http\Controllers\Api\AnnonceController;
+use App\Http\Controllers\Api\CommentaireController;
 use App\Http\Controllers\Api\EtatProjetController;
 use App\Http\Controllers\Api\ProjetController;
+use App\Http\Controllers\Api\TypeProjetController;
+use App\Models\TypeProjet;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -27,8 +30,8 @@ Route::get('/liste/projets', [ProjetController::class, 'index'])->name('projets.
 Route::post('/projet/ajouter', [ProjetController::class, 'store'])->name('projet.ajouter');
 // Modifier des donnees Projet
 Route::patch('/projet/modifier/{projet_id}', [ProjetController::class, 'update'])->name('projet.modifier');
-// Supprimer des donnees Projet
-Route::delete('/projet/supprimer/{projet_id}', [ProjetController::class, 'destroy'])->name('projet.supprimer');
+// Archiver des donnees Projet
+Route::patch('/projet/modifier/etat/{projet_id}/{etat}', [ProjetController::class, 'archiver'])->name('projet.archiver');
 
 // Toutes les Annonces des communes
 Route::get('/liste/annonces', [AnnonceController::class, 'index'])->name('annonces.lister');
@@ -36,6 +39,8 @@ Route::get('/liste/annonces', [AnnonceController::class, 'index'])->name('annonc
 Route::post('/annonce/ajouter', [AnnonceController::class, 'store'])->name('annonces.ajouter');
 // Modifier des donnees Projet
 Route::patch('/annonce/modifier/{annonce_id}', [AnnonceController::class, 'update'])->name('annonce.modifier');
+// Archiver des donnees Projet
+Route::patch('/annonce/modifier/etat/{annonce_id}/{etat}', [AnnonceController::class, 'archiver'])->name('annonce.archiver');
 
 // Toutes les Etat Projet
 Route::get('/liste/etat/projet', [EtatProjetController::class, 'index'])->name('etat.projet.lister');
@@ -46,4 +51,19 @@ Route::patch('/etat/projet/modifier/{etatprojet_id}', [EtatProjetController::cla
 // Supprimer un Etat Projet
 Route::delete('/etat/projet/supprimer/{etatprojet_id}', [EtatProjetController::class, 'destroy'])->name('etat.projet.supprimer');
 
-//Ajouter un commentaires
+// Toutes les Type Projet
+Route::get('/liste/type/projet', [TypeProjetController::class, 'index'])->name('type.projet.lister');
+// Inserer un Etat Projet
+Route::post('/type/projet/ajouter', [TypeProjetController::class, 'store'])->name('type.projet.ajouter');
+// Modifier un Etat Projet
+Route::patch('/type/projet/modifier/{type_projet_id}', [TypeProjetController::class, 'update'])->name('type.projet.modifier');
+// Supprimer un Etat Projet
+Route::delete('/type/projet/supprimer/{type_projet_id}', [TypeProjetController::class, 'destroy'])->name('type.projet.supprimer');
+
+
+//Lister les Commentaires Annonce
+Route::get('/liste/commentaires/annonces', [CommentaireController::class, 'index'])->name('commentaires.lister');
+// Inserer un Etat Projet
+Route::post('/commentaires/ajouter/{annonce_id}/{user_id}', [CommentaireController::class, 'store'])->name('commentaires.ajouter');
+// Modifier un Commentaires Annonce
+Route::patch('/commentaire/modifier/{commentaire_id}', [CommentaireController::class, 'update'])->name('commentaires.modifier');

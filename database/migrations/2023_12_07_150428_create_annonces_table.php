@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('titre');
             $table->string('image');
             $table->string('description');
-            $table->boolean('etat')->default(0);
+            $table->boolean('etat')->default(true);
             $table->foreignIdFor(User::class)->constrained()->cascadeOnDelete();
             $table->timestamps();
         });

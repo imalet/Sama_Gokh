@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Commentaire;
 use Illuminate\Http\Request;
 
 class CommentaireController extends Controller
@@ -12,7 +13,7 @@ class CommentaireController extends Controller
      */
     public function index()
     {
-        //
+        return Commentaire::all();
     }
 
     /**
@@ -28,7 +29,14 @@ class CommentaireController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $newData = new Commentaire();
+        $newData->annonce_id = $request->annonce_id;
+        $newData->contenu = $request->contenu;
+        $newData->user_id = $request->user_id;
+
+        $newData->save();
+
+        return response('Insertion Commentaire OK', 200);
     }
 
     /**
@@ -52,7 +60,11 @@ class CommentaireController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $commentaire = Commentaire::findOrFail($id);
+        $commentaire->contenu = $request->contenu;
+
+        $commentaire->save();
+        return response('update Commentaire OK', 200);
     }
 
     /**

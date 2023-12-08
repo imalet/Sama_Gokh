@@ -81,9 +81,14 @@ class AnnonceController extends Controller
     /**
      * Archieve the specified resource from storage.
      */
-    public function archiver(string $id)
+    public function archiver(string $id, string $etat)
     {
-        return response('ARCHIVE', 200);
+        
+        $projet = Annonce::findOrFail($id);
+        $projet->etat = $etat;
+        $projet->save();
+
+        return response('Archiver Annonce OK', 200);
     }
 
     /**

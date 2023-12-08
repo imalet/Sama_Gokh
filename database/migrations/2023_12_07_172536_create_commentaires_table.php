@@ -18,6 +18,7 @@ return new class extends Migration
             $table->foreignIdFor(Annonce::class)->constrained()->cascadeOnDelete();
             $table->string('contenu');
             $table->foreignIdFor(User::class)->constrained()->cascadeOnDelete();
+            $table->boolean('etat')->default(true);
             $table->timestamps();
         });
     }

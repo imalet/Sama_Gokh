@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('image');
             $table->integer('couts');
             $table->date('delai');
-            $table->boolean('etat')->default(0);
+            $table->boolean('etat')->default(true);
             $table->foreignIdFor(TypeProjet::class)->constrained()->cascadeOnDelete();
             $table->foreignIdFor(EtatProjet::class)->constrained()->cascadeOnDelete();
             $table->timestamps();

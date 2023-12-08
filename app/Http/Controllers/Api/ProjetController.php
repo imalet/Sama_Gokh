@@ -90,12 +90,22 @@ class ProjetController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    // public function destroy(string $id)
+    // {
+    //     $projet = Projet::findOrFail($id);
+
+    //     $projet->delete();
+
+    //     return response('Delete OK', 200);
+    // }
+
+    public function archiver(string $id, string $etat)
     {
+        
         $projet = Projet::findOrFail($id);
+        $projet->etat = $etat;
+        $projet->save();
 
-        $projet->delete();
-
-        return response('Delete OK', 200);
+        return response('Archiver OK', 200);
     }
 }

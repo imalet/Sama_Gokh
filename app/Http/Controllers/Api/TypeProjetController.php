@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\TypeProjet;
 use Illuminate\Http\Request;
+use Mockery\Matcher\Type;
 
 class TypeProjetController extends Controller
 {
@@ -12,7 +14,7 @@ class TypeProjetController extends Controller
      */
     public function index()
     {
-        //
+        return TypeProjet::all();
     }
 
     /**
@@ -28,7 +30,12 @@ class TypeProjetController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $type_projet = new TypeProjet();
+        $type_projet->nom = $request->nom;
+
+        $type_projet->save();
+
+        return response('Insertion Type Projet', 200);
     }
 
     /**
@@ -52,7 +59,13 @@ class TypeProjetController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+
+        $type_projet = TypeProjet::findOrFail($id);
+        $type_projet->nom = $request->nom;
+
+        $type_projet->save();
+
+        return response('Modification Type Projet OK', 200);
     }
 
     /**
@@ -60,6 +73,10 @@ class TypeProjetController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $type_projet = TypeProjet::findOrFail($id);
+
+        $type_projet->delete();
+
+        return response('Suppression Type Projet OK', 200);
     }
 }
