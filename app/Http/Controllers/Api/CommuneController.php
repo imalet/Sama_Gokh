@@ -16,32 +16,31 @@ class CommuneController extends Controller
      */
     public function index(Request $request)
     {
-       try {
+        try {
 
-        $query = Commune::query();
-        $perPage = 6; 
-        $page = $request->input('page', 1);
-        $search = $request->input('search');
+            $query = Commune::query();
+            $perPage = 6;
+            $page = $request->input('page', 5);
+            $search = $request->input('search');
 
-        if ($search) {
-            $query = $query->whereRaw("nom LIKE '%". $search . "%'");
-        }
-        
-        $totalCommune = $query->count();
+            if ($search) {
+                $query = $query->whereRaw("nom LIKE '%" . $search . "%'");
+            }
 
-        $resultat = $query->offset(($page -6) *$perPage)->limit($page)->get(); 
-        
+            $totalCommune = $query->count();
+
+            $resultat = $query->offset(($page - 6) * $perPage)->limit($page)->get();
+
 
             return response()->json([
-            'statut_message'=> 'Toutes les communes on été récupérées.',
-            'statut_code'=>200,
-            'current_page' => $page,
-            'last_page' =>ceil($totalCommune / $perPage),
-            'items' => $resultat 
-        ]);
-
-        } catch(Exception $e) {
-            response()->json($e);   
+                'statut_message' => 'Toutes les communes on été récupérées.',
+                'statut_code' => 200,
+                'current_page' => $page,
+                'last_page' => ceil($totalCommune / $perPage),
+                'items' => $resultat
+            ]);
+        } catch (Exception $e) {
+            response()->json($e);
         }
     }
 
@@ -59,34 +58,33 @@ class CommuneController extends Controller
     public function store(CreateCommuneRequest $request)
     {
         // dd($request);
-        
-       try{
 
-        $commune = new Commune();
+        try {
 
-        $commune->nom = $request->nom;
-        $commune->image = $request->image;
-        if ($request->file('image')) {
-            $file = $request->file('image');
-            $filename = date('YmdHi') . $file->getClientOriginalName();
-            $file->move(public_path('images'), $filename);
-            $commune['image'] = $filename;
+            $commune = new Commune();
+
+            $commune->nom = $request->nom;
+            // $commune->image = $request->image;
+            if ($request->file('image')) {
+                $file = $request->file('image');
+                $filename = date('YmdHi') . $file->getClientOriginalName();
+                $file->move(public_path('images'), $filename);
+                $commune['image'] = $filename;
+            }
+            $commune->nombreCitoyen = $request->nombreCitoyen;
+            $commune->ville_id = $request->ville_id;
+
+            $commune->save();
+
+            return response()->json([
+                'statut_message' => 'Nouvelle commune ajoutée avec succès',
+                'statut_code' => 200,
+                'statut_code' => $commune,
+            ]);
+        } catch (Exception $e) {
+
+            throw new \Exception($e);
         }
-        $commune->nombreCitoyen = $request->nombreCitoyen;
-        $commune->user_id = $request->user_id;
-
-        $commune->save();
-
-        return response()->json([
-            'statut_code'=>200,
-            'statut_message'=>'Nouvelle commune ajoutée avec succès',
-            'statut_code'=> $commune ,
-        ]);
-
-       } catch(Exception $e) {
-
-        throw new \Exception($e);
-       }
     }
 
     /**
@@ -111,22 +109,31 @@ class CommuneController extends Controller
 
     public function update(UpdateCommuneRequest $request, Commune $commune)
     {
-      try{
-        $commune->nom = $request->nom;
-        $commune->image = $request->image;
-        $commune->nombreCitoyen = $request->nombreCitoyen;
-        $commune->user_id = $request->user_id;
-        $commune->update();
-        return response()->json([
-            'statut_message'=>'Le nom de la commune a été modifiée avec succès',
-            'statut_code'=>200,
-            'statut_code'=> $commune ,
-        ]);
+        // dd($commune);
+        // dd($request);
+        // dd($request->nom);
+        try {
+            $commune->nom = $request->nom;
+            if ($request->file('image')) {
+                $file = $request->file('image');
+                $filename = date('YmdHi') . $file->getClientOriginalName();
+                $file->move(public_path('images'), $filename);
+                $commune['image'] = $filename;
+            }
+            $commune->nombreCitoyen = $request->nombreCitoyen;
+            $commune->ville_id = $request->ville_id;
+            //  dd($commune);
+            $commune->save();
 
-      } catch(Exception $e) {
-        
-        return response()->json($e);
-      };
+            return response()->json([
+                'statut_message' => 'Le commune a été modifiée avec succès',
+                'statut_code' => 200,
+                'statut_code' => $commune,
+            ]);
+        } catch (Exception $e) {
+
+            return response()->json($e);
+        };
     }
 
     /**

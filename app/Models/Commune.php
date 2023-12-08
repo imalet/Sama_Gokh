@@ -12,6 +12,6 @@ class Commune extends Model
         'nom',
         'nombreCitoyen',
         'image',
-        'user_id'
+        'ville_id'
     ];
 }

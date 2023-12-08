@@ -28,7 +28,7 @@ class CreateRoleRequest extends FormRequest
         ];
     }
 
-    public function failedValidation(Validator $validator) 
+    public function failedValidation(Validator $validator)
     {
         throw new HttpResponseException(response()->json([
             'success'   => false,
@@ -45,7 +45,7 @@ class CreateRoleRequest extends FormRequest
             'nom.required' => 'Le nom du rôle est obligatoire, veuillez le renseigner.',
             'nom.max' => 'Le nom du rôle ne peut pas dépasser 50 caractères.',
             'nom.unique' => 'Ce nom de rôle est déjà utilisé, veuillez en choisir un autre.',
-    
-            ];
+
+        ];
     }
 }

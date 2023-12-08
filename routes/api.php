@@ -63,7 +63,7 @@ Route::post('/commune/store',[CommuneController::class,'store'])->name("commune.
 Route::put('/commune/update/{commune}',[CommuneController::class,'update'])->name("commune.update");
 
 // Test Ajouter User
-Route::post('/user/store',[UserController::class,'store'])->name("user.add"); 
+Route::post('/user/store',[UserController::class,'store']); 
 
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {

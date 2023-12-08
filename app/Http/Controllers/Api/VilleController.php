@@ -20,7 +20,7 @@ class VilleController extends Controller
 
         $query = Ville::query();
         $perPage = 6; 
-        $page = $request->input('page', 1);
+        $page = $request->input('page', 5);
         $search = $request->input('search');
 
         if ($search) {

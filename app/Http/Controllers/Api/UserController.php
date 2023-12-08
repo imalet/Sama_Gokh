@@ -36,6 +36,8 @@ class UserController extends Controller
             $user->name = $request->name;
             $user->email = $request->email;
             $user->password = $request->password;
+            $user->role_id = $request->role_id;
+            $user->commune_id = $request->commune_id;
     
             $user->save();
     

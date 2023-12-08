@@ -21,7 +21,7 @@ class RoleController extends Controller
           
         $query = Role::query();
         $perPage = 6; 
-        $page = $request->input('page', 1);
+        $page = $request->input('page', 5);
         $search = $request->input('search');
 
         if ($search) {
