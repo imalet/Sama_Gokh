@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\Commune;
+use App\Models\Role;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -18,6 +20,10 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
+            // $table->unsignedBigInteger('role_id');
+            $table->foreignIdFor(Role::class)->constrained()->onDelete('cascade');
+            // $table->unsignedBigInteger('commune_id');
+            $table->foreignIdFor(Commune::class)->constrained()->onDelete('cascade');
             $table->timestamps();
         });
     }
