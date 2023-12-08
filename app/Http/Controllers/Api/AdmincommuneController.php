@@ -35,7 +35,6 @@ class AdmincommuneController extends Controller
 $admincommune= new User();
 $admincommune->nom=$request->nom;
 $admincommune->prenom=$request->prenom;
-$admincommune->age=$request->age;
 $admincommune->email=$request->email;
 $admincommune->password=$request->password;
 $admincommune->telephone=$request->telephone;
@@ -44,6 +43,7 @@ $admincommune->username=$request->username;
 $admincommune->CNI=$request->CNI;
 $admincommune->sexe=$request->sexe;
 $admincommune->role_id=$request->role_id;
+$admincommune->commune_id=$request->commune_id;
 $admincommune->save();
 
 return response()->json([
@@ -62,7 +62,6 @@ return response()->json([
 $admincommune = User::find($id);
 $admincommune->nom =$request->nom;
 $admincommune->prenom=$request->prenom;
-$admincommune->age=$request->age;
 $admincommune->email=$request->email;
 $admincommune->password=$request->password;
 $admincommune->telephone=$request->telephone;
@@ -71,6 +70,7 @@ $admincommune->username=$request->username;
 $admincommune->CNI=$request->CNI;
 $admincommune->sexe=$request->sexe;
 $admincommune->role_id=$request->role_id;
+$admincommune->commune_id=$request->commune_id;
 $admincommune->save();
 
 return response()->json([

@@ -13,18 +13,12 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // \App\Models\User::factory(10)->create();
+         \App\Models\Commune::factory(10)->create();
 
         // \App\Models\User::factory()->create([
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',
         // ]);
-        $array = ['admin', 'citoyen'];
-        DB::table('roles')->insert([
-            'name'=> $array[mt_rand(0,1)]
-        ]);
-        $this->call([
-            Roleseeder::class,
-        ]);
+      
     }
 }

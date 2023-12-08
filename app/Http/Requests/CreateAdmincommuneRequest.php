@@ -25,13 +25,13 @@ class CreateAdmincommuneRequest extends FormRequest
         return [
             'nom' => 'required|max:255',
             'prenom' => 'required|max:255',
-            'age' => 'required|numeric',
             'email' => 'required|email', 
             'password' => 'required|min:8',
             'telephone' => ['required', 'regex:/^\+221(77|78|76|70)\d{7}$/'], 
             'etat' => 'required',
             'username' => 'required',
             'CNI' => 'required|numeric',
+    
            
         ];
     }
@@ -48,14 +48,14 @@ class CreateAdmincommuneRequest extends FormRequest
         return[
             'nom.required'=>'un nom doit etre fourni',
             'prenom.required'=>' prenom doit etre fourni',
-            'age.required'=>'age doit etre fourni',
             'email.required'=>'email doit etre fourni',
             'password.required'=>'password doit etre fourni',
             'telephone.required'=>'telephone doit etre fourni',
             'etat.required'=>'etat doit etre fourni',
             'username.required'=>'username doit etre fourni',
             'CNI.required'=>'CNI doit etre fourni',
-            'sexe.required'=>'sexe doit etre fourni',
+            'sexe.required'=>'sexe doit etre fourni'
+    
            
         ];
     }

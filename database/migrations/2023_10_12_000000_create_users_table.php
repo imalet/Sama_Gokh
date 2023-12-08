@@ -15,16 +15,17 @@ return new class extends Migration
             $table->id();
             $table->string('nom');
             $table->string('prenom');
-            $table->integer('age');
             $table->string('email');
             $table->string('password');
             $table->string('telephone');
             $table->string('etat')->default('actif');
             $table->string('username')->unique();
             $table->string('CNI');
-            $table->enum('sexe',['M', 'F']);
+            $table->enum('sexe',['Masculin', 'Féminin']);
             $table->unsignedBigInteger('role_id');
             $table->foreign('role_id')->references('id')->on('roles');
+            $table->unsignedBigInteger('commune_id');
+            $table->foreign('commune_id')->references('id')->on('communes');
             $table->timestamp('email_verified_at')->nullable();
             $table->rememberToken();
 

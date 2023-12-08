@@ -32,7 +32,6 @@ class MaireController extends Controller
 $maire= new User();
 $maire->nom =$request->nom;
 $maire->prenom=$request->prenom;
-$maire->age=$request->age;
 $maire->email=$request->email;
 $maire->password=$request->password;
 $maire->telephone=$request->telephone;
@@ -41,6 +40,7 @@ $maire->username=$request->username;
 $maire->CNI=$request->CNI;
 $maire->sexe=$request->sexe;
 $maire->role_id=$request->role_id;
+$maire->commune_id=$request->commune_id;
 $maire->save();
 
 return response()->json([
@@ -58,7 +58,6 @@ return response()->json([
 $maire = User::find($id);
 $maire->nom =$request->nom;
 $maire->prenom=$request->prenom;
-$maire->age=$request->age;
 $maire->email=$request->email;
 $maire->password=$request->password;
 $maire->telephone=$request->telephone;
@@ -67,6 +66,7 @@ $maire->username=$request->username;
 $maire->CNI=$request->CNI;
 $maire->sexe=$request->sexe;
 $maire->role_id=$request->role_id;
+$maire->commune_id=$request->commune_id;
 $maire->save();
 
 return response()->json([
