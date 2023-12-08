@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\TypeProjetResource;
 use App\Models\TypeProjet;
 use Illuminate\Http\Request;
 use Mockery\Matcher\Type;

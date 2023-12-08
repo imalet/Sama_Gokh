@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\ProjetResource;
 use App\Models\Projet;
 use Illuminate\Http\Request;
-use PhpParser\Node\Expr\Cast\String_;
 
 class ProjetController extends Controller
 {
@@ -14,7 +14,7 @@ class ProjetController extends Controller
      */
     public function index()
     {
-        return Projet::all();
+        return ProjetResource::collection(Projet::all());
     }
 
     /**

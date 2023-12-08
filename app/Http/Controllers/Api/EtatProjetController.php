@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\EtatProjetResource;
 use App\Models\EtatProjet;
 use Illuminate\Http\Request;
 

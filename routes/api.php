@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\CommentaireController;
 use App\Http\Controllers\Api\EtatProjetController;
 use App\Http\Controllers\Api\ProjetController;
 use App\Http\Controllers\Api\TypeProjetController;
+use App\Http\Controllers\Api\VoteController;
 use App\Models\TypeProjet;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -24,6 +25,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+
 // Tous les projets des communes
 Route::get('/liste/projets', [ProjetController::class, 'index'])->name('projets.lister');
 // Inserer des donnees Projet
@@ -31,7 +33,8 @@ Route::post('/projet/ajouter', [ProjetController::class, 'store'])->name('projet
 // Modifier des donnees Projet
 Route::patch('/projet/modifier/{projet_id}', [ProjetController::class, 'update'])->name('projet.modifier');
 // Archiver des donnees Projet
-Route::patch('/projet/modifier/etat/{projet_id}/{etat}', [ProjetController::class, 'archiver'])->name('projet.archiver');
+Route::patch('/projet/archiver/etat/{projet_id}/{etat}', [ProjetController::class, 'archiver'])->name('projet.archiver');
+
 
 // Toutes les Annonces des communes
 Route::get('/liste/annonces', [AnnonceController::class, 'index'])->name('annonces.lister');
@@ -40,7 +43,8 @@ Route::post('/annonce/ajouter', [AnnonceController::class, 'store'])->name('anno
 // Modifier des donnees Projet
 Route::patch('/annonce/modifier/{annonce_id}', [AnnonceController::class, 'update'])->name('annonce.modifier');
 // Archiver des donnees Projet
-Route::patch('/annonce/modifier/etat/{annonce_id}/{etat}', [AnnonceController::class, 'archiver'])->name('annonce.archiver');
+Route::patch('/annonce/archiver/etat/{annonce_id}/{etat}', [AnnonceController::class, 'archiver'])->name('annonce.archiver');
+
 
 // Toutes les Etat Projet
 Route::get('/liste/etat/projet', [EtatProjetController::class, 'index'])->name('etat.projet.lister');
@@ -50,6 +54,7 @@ Route::post('/etat/projet/ajouter', [EtatProjetController::class, 'store'])->nam
 Route::patch('/etat/projet/modifier/{etatprojet_id}', [EtatProjetController::class, 'update'])->name('etat.projet.modifier');
 // Supprimer un Etat Projet
 Route::delete('/etat/projet/supprimer/{etatprojet_id}', [EtatProjetController::class, 'destroy'])->name('etat.projet.supprimer');
+
 
 // Toutes les Type Projet
 Route::get('/liste/type/projet', [TypeProjetController::class, 'index'])->name('type.projet.lister');
@@ -67,3 +72,15 @@ Route::get('/liste/commentaires/annonces', [CommentaireController::class, 'index
 Route::post('/commentaires/ajouter/{annonce_id}/{user_id}', [CommentaireController::class, 'store'])->name('commentaires.ajouter');
 // Modifier un Commentaires Annonce
 Route::patch('/commentaire/modifier/{commentaire_id}', [CommentaireController::class, 'update'])->name('commentaires.modifier');
+// Archiver un Commentaires Annonce
+Route::patch('/commentaire/archiver/{commentaire_id}/{etat}', [CommentaireController::class, 'archiver'])->name('commentaires.archiver');
+
+
+// Liste des Votes
+Route::get('/liste/vote', [VoteController::class, 'index'])->name('vote.lister');
+// Modification des Votes
+Route::post('/vote/ajouter', [VoteController::class, 'store'])->name('vote.ajouter');
+// Modification des Votes
+Route::patch('/vote/modification/{vote_id}', [VoteController::class, 'update'])->name('vote.modifier');
+// Supprimer des Votes
+Route::delete('/vote/supprimer/{vote_id}', [VoteController::class, 'destroy'])->name('vote.supprimer');

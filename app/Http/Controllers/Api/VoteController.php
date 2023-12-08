@@ -3,18 +3,17 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\CommentaireResource;
-use App\Models\Commentaire;
+use App\Models\Vote;
 use Illuminate\Http\Request;
 
-class CommentaireController extends Controller
+class VoteController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return CommentaireResource::collection(Commentaire::all());
+        return Vote::all();
     }
 
     /**
@@ -30,14 +29,15 @@ class CommentaireController extends Controller
      */
     public function store(Request $request)
     {
-        $newData = new Commentaire();
-        $newData->annonce_id = $request->annonce_id;
-        $newData->contenu = $request->contenu;
+        $newData = new Vote();
         $newData->user_id = $request->user_id;
+        $newData->statut = $request->statut;
+        $newData->projet_id = $request->projet_id;
+        $newData->date_de_cloture = $request->date_de_cloture;
 
         $newData->save();
 
-        return response('Insertion Commentaire OK', 200);
+        return response('Insertion Vote OK', 200);
     }
 
     /**
@@ -61,23 +61,26 @@ class CommentaireController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $commentaire = Commentaire::findOrFail($id);
-        $commentaire->contenu = $request->contenu;
+        $vote = Vote::findOrFail($id);
+        $vote->user_id = $request->user_id;
+        $vote->statut = $request->statut;
+        $vote->projet_id = $request->projet_id;
+        $vote->date_de_cloture = $request->date_de_cloture;
 
-        $commentaire->save();
-        return response('update Commentaire OK', 200);
+        $vote->save();
+
+        return response('Modification Vote OK', 200);
     }
 
     /**
-     * Remove the archieve resource from storage.
+     * Remove the specified resource from storage.
      */
-    public function archiver(string $id, string $etat)
+    public function destroy(string $id)
     {
-        
-        $commentaire = Commentaire::findOrFail($id);
-        $commentaire->etat = $etat;
-        $commentaire->save();
+        $vote = Vote::findOrFail($id);
+        $vote->delete();
 
-        return response('Archiver Commentaire OK', 200);
+        return response('Supression Vote OK', 200);
+
     }
 }

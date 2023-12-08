@@ -7,6 +7,7 @@ namespace App\Models;
 use App\Http\Controllers\AnnonceController;
 use App\Models\Annonce;
 use App\Models\Commentaire;
+use App\Models\Vote;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -53,6 +54,10 @@ class User extends Authenticatable
 
     public function commentaires(){
         return $this->hasMany(Commentaire::class);
+    }
+
+    public function votes(){
+        return $this->hasMany(Vote::class);
     }
     
 }

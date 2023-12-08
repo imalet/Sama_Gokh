@@ -11,11 +11,15 @@ class Projet extends Model
 {
     use HasFactory;
 
-    public function typeprojet(){
+    public function typeProjet(){
         return $this->belongsTo(TypeProjet::class);
     }
 
-    public function etatprojet(){
+    public function etatProjet(){
         return $this->belongsTo(EtatProjet::class);
+    }
+
+    public function votes(){
+        return $this->hasMany(Vote::class);
     }
 }
