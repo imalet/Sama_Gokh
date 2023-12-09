@@ -12,4 +12,9 @@ class Ville extends Model
     protected $fillable = [
         'nom',
     ];
+
+    public function communes()
+    {
+        return $this->hasMany(Commune::class);
+    }
 }

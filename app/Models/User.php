@@ -49,7 +49,6 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
-<<<<<<< HEAD
     public function commune(){
         return $this->belongsTo(Commune::class);
     }
@@ -57,7 +56,6 @@ class User extends Authenticatable
     public function role(){
         return $this->belongsTo(Role::class);
     }
-=======
 
     public function annonce(){
         return $this->hasMany(Annonce::class);
@@ -71,5 +69,4 @@ class User extends Authenticatable
         return $this->hasMany(Vote::class);
     }
     
->>>>>>> feature/benji_ProjetCommune
 }

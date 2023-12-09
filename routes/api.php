@@ -77,7 +77,7 @@ Route::get('/ressource/villes', function () {
     return VilleResource::collection($villes);
 });
 
-// ----------------------------------------COMMMUNE------------------------------------------------------------------
+// ----------------------------------------COMMMUNE-----------------------------------------------------------------
 // Afficher Liste communes 
 Route::get('communes', [CommuneController::class, 'index']);
 // Ajouter une commune dans la base de données 
@@ -155,6 +155,9 @@ Route::middleware(['auth:sanctum', 'role:Citoyen'])->group(function () {
     //la route de deconnexion
     Route::post('/logout', [UserController::class, 'logout']);
 });
+
+//-----------------------------Benji---------------------------
+
 // Tous les projets
 Route::get('/liste/projets', [ProjetController::class, 'index'])->name('projets.lister');
 // Inserer des donnees Projet
