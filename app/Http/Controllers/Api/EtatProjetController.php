@@ -42,7 +42,8 @@ class EtatProjetController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $etat_projet = EtatProjet::findOrFail($id);
+        return $etat_projet;
     }
 
     /**

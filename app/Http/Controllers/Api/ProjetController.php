@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Projet\AjouterProjetRequest;
+use App\Http\Requests\Projet\ModifierProjetRequest;
 use App\Http\Resources\ProjetResource;
 use App\Models\Projet;
 use Illuminate\Http\Request;
@@ -20,15 +22,14 @@ class ProjetController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(string $id)
     {
-        //
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(AjouterProjetRequest $request)
     {
         $newData = new Projet();
         $newData->titre = $request->titre;
@@ -41,10 +42,10 @@ class ProjetController extends Controller
         $newData->etat_projet_id = $request->etat_projet_id;
 
         if ($newData->save()) {
-            return response('Insertion Ok', 200);
+            return response()->json(['message' => 'Insertion réussie'], 200);
         }
 
-        return response('BAD Insert', 200);
+        return response()->json(['message' => 'Échec de l\'insertion'], 422);
     }
 
     /**
@@ -52,7 +53,8 @@ class ProjetController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $projet = Projet::findOrFail($id);
+        return $projet;
     }
 
     /**
@@ -66,7 +68,7 @@ class ProjetController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(ModifierProjetRequest $request, string $id)
     {
 
         $projet = Projet::findOrFail($id);
@@ -88,20 +90,11 @@ class ProjetController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Archieve the specified resource from storage.
      */
-    // public function destroy(string $id)
-    // {
-    //     $projet = Projet::findOrFail($id);
-
-    //     $projet->delete();
-
-    //     return response('Delete OK', 200);
-    // }
-
     public function archiver(string $id, string $etat)
     {
-        
+
         $projet = Projet::findOrFail($id);
         $projet->etat = $etat;
         $projet->save();

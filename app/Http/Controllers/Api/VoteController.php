@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Vote\AjouterVoteRequest;
+use App\Http\Requests\Vote\ModifierVoteRequest;
 use App\Models\Vote;
 use Illuminate\Http\Request;
 
@@ -27,7 +29,7 @@ class VoteController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(AjouterVoteRequest $request)
     {
         $newData = new Vote();
         $newData->user_id = $request->user_id;
@@ -35,9 +37,11 @@ class VoteController extends Controller
         $newData->projet_id = $request->projet_id;
         $newData->date_de_cloture = $request->date_de_cloture;
 
-        $newData->save();
+        if ($newData->save()) {
+            return response()->json(["Message"=>"Insertion d'un vote Reussi"],200);
+        }
+        return response()->json(["Message"=>"Insertion d'un vote Echoué"],422);
 
-        return response('Insertion Vote OK', 200);
     }
 
     /**
@@ -45,7 +49,8 @@ class VoteController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $vote = Vote::findOrFail($id);
+        return $vote;
     }
 
     /**
@@ -59,7 +64,7 @@ class VoteController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(ModifierVoteRequest $request, string $id)
     {
         $vote = Vote::findOrFail($id);
         $vote->user_id = $request->user_id;
@@ -67,9 +72,10 @@ class VoteController extends Controller
         $vote->projet_id = $request->projet_id;
         $vote->date_de_cloture = $request->date_de_cloture;
 
-        $vote->save();
-
-        return response('Modification Vote OK', 200);
+        if ($vote->save()) {
+            return response()->json(["Message"=>"Modification d'un vote Reussi"],200);
+        }
+        return response()->json(["Message"=>"Modification d'un vote Echoué"],422);
     }
 
     /**

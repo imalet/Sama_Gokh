@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Commentaire\AjouterCommentaireRequest;
+use App\Http\Requests\Commentaire\ModifierCommentaireRequest;
 use App\Http\Resources\CommentaireResource;
 use App\Models\Commentaire;
 use Illuminate\Http\Request;
@@ -28,16 +30,20 @@ class CommentaireController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(AjouterCommentaireRequest $request)
     {
         $newData = new Commentaire();
         $newData->annonce_id = $request->annonce_id;
         $newData->contenu = $request->contenu;
         $newData->user_id = $request->user_id;
 
-        $newData->save();
+        if ($newData->save()) {
+            return response()->json(["Message"=>"Insertion de Commentaire"],200);
+        }
 
-        return response('Insertion Commentaire OK', 200);
+        return response()->json(["Message"=>"Insertion Echoué"],422);
+
+        
     }
 
     /**
@@ -45,7 +51,8 @@ class CommentaireController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $commentaire = Commentaire::findOrFail($id);
+        return $commentaire;
     }
 
     /**
@@ -59,7 +66,7 @@ class CommentaireController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(ModifierCommentaireRequest $request, string $id)
     {
         $commentaire = Commentaire::findOrFail($id);
         $commentaire->contenu = $request->contenu;

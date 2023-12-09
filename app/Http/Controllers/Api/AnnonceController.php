@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Annonce\AjouterAnnonceRequest;
+use App\Http\Requests\Annonce\ModifierAnnonceRequest;
 use App\Models\Annonce;
 use Illuminate\Http\Request;
 
@@ -27,7 +29,7 @@ class AnnonceController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(AjouterAnnonceRequest $request)
     {
         $newData = new Annonce();
         $newData->titre = $request->titre;
@@ -37,10 +39,10 @@ class AnnonceController extends Controller
         $newData->user_id = 1;
 
         if ($newData->save()) {
-            return response('Insertion Ok', 200);
+            return response()->json(['message'=>'Insertion Reussi'],200);
         }
 
-        return response('BAD Insert', 200);
+        return response()->json(['message'=>'Échec de l\'insertion'],422);
     }
 
     /**
@@ -48,7 +50,8 @@ class AnnonceController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $annonce = Annonce::findOrfail($id);
+        return $annonce;
     }
 
     /**
@@ -56,13 +59,13 @@ class AnnonceController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(ModifierAnnonceRequest $request, string $id)
     {
         $annonce = Annonce::findOrFail($id);
 
@@ -72,10 +75,10 @@ class AnnonceController extends Controller
         $annonce->etat = $request->etat;
 
         if ($annonce->save()) {
-            return response('Update Ok', 200);
+            return response()->json(["message"=>"Annonce modifié Avec Success", 200]);
         }
 
-        return response('BAD Update', 200);
+        return response()->json(['message'=>"Erreur d'Insertion"],422);
     }
 
     /**
