@@ -64,7 +64,6 @@ class CommuneController extends Controller
             $commune = new Commune();
 
             $commune->nom = $request->nom;
-            // $commune->image = $request->image;
             if ($request->file('image')) {
                 $file = $request->file('image');
                 $filename = date('YmdHi') . $file->getClientOriginalName();
@@ -92,7 +91,8 @@ class CommuneController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $commune = Commune::findOrFail($id);
+        return $commune;
     }
 
     /**

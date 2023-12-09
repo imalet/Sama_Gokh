@@ -25,10 +25,9 @@ class EditCitizenRequest extends FormRequest
         return [
             'nom' => 'required|max:255',
             'prenom' => 'required|max:255',
-            'age'=> 'required',
             'email' => 'required|email',
             // 'password'=> 'required',
-            'telephone'=> 'required|regex:/^\+221(77|78|76|70)\d{7}$/',
+            'telephone'=> ['required', 'regex:/^\+221(77|78|76|70)\d{7}$/'],
             'username' => 'required|max:255',
             'CNI' => 'required|numeric',
             'sexe' => 'required'

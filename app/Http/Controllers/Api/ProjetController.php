@@ -44,22 +44,20 @@ class ProjetController extends Controller
         $userConnecte = auth()->user()->id;
         $roleIdUserConnecte = User::find($userConnecte)->first()->role_id;
 
-        if(Role::where('id',$roleIdUserConnecte)->first()->id === $roleIdUserConnecte){
+        if (Role::where('id', $roleIdUserConnecte)->first()->id === $roleIdUserConnecte) {
             // dd('ok');
-            if(Role::where('id',$roleIdUserConnecte)->first()->nom == "Citoyen"){
+            if (Role::where('id', $roleIdUserConnecte)->first()->nom == "Citoyen") {
                 $newData->type_projet_id = 2;
-            }elseif(Role::where('id',$roleIdUserConnecte)->first()->nom == "AdminCommune"){
-                 $newData->type_projet_id = 1;
-               
+            } elseif (Role::where('id', $roleIdUserConnecte)->first()->nom == "AdminCommune") {
+                $newData->type_projet_id = 1;
             }
-            
-         }
+        }
         // $newData->type_projet_id = $request->type_projet_id;
-         $newData->etat_projet_id = true;
+        $newData->etat_projet_id = true;
 
         if ($newData->save()) {
             return response()->json(['message' => 'Insertion réussie'], 200);
-         }
+        }
 
         return response()->json(['message' => 'Échec de l\'insertion'], 422);
     }

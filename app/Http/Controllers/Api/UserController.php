@@ -89,7 +89,6 @@ class UserController extends Controller
             $user->role_id = auth()->user()->role_id;
             $user->nom = $request->nom;
             $user->prenom = $request->prenom;
-            $user->age = $request->age;
             $user->email = $request->email;
            
             $user->telephone = $request->telephone;
@@ -115,6 +114,18 @@ class UserController extends Controller
             return response()->json($e);
         }
     }
+
+    public function show(Request $request , string $id){
+        // dd($user);
+        try{
+            $user = User::findOrFail($id);
+            return $user;
+            
+        }catch(Exception $e){
+            return response()->json($e);
+        }
+    }
+
     public function archive(User $user){
         try{
             
