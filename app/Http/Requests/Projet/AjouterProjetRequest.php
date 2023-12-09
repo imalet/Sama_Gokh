@@ -30,7 +30,7 @@ class AjouterProjetRequest extends FormRequest
             'image' => 'required|string',
             'couts' => 'required|numeric',
             'delai' => 'required|date',
-            'etat' => 'required|boolean',
+            'etat' => ['required','boolean'],
             'type_projet_id' => 'required|exists:type_projets,id',
             'etat_projet_id' => 'required|exists:etat_projets,id',
         ];

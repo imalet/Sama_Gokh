@@ -7,6 +7,7 @@ use App\Http\Requests\Vote\AjouterVoteRequest;
 use App\Http\Requests\Vote\ModifierVoteRequest;
 use App\Models\Vote;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class VoteController extends Controller
 {
@@ -32,7 +33,7 @@ class VoteController extends Controller
     public function store(AjouterVoteRequest $request)
     {
         $newData = new Vote();
-        $newData->user_id = $request->user_id;
+        $newData->user_id = auth()->user()->id;
         $newData->statut = $request->statut;
         $newData->projet_id = $request->projet_id;
         $newData->date_de_cloture = $request->date_de_cloture;

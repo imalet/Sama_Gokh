@@ -8,6 +8,7 @@ use App\Http\Requests\Commentaire\ModifierCommentaireRequest;
 use App\Http\Resources\CommentaireResource;
 use App\Models\Commentaire;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CommentaireController extends Controller
 {
@@ -35,7 +36,8 @@ class CommentaireController extends Controller
         $newData = new Commentaire();
         $newData->annonce_id = $request->annonce_id;
         $newData->contenu = $request->contenu;
-        $newData->user_id = $request->user_id;
+        $newData->user_id = Auth::user()->id;
+        // $newData->user_id = $request->user_id;
 
         if ($newData->save()) {
             return response()->json(["Message"=>"Insertion de Commentaire"],200);

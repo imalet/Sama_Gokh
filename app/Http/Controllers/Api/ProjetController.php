@@ -7,7 +7,10 @@ use App\Http\Requests\Projet\AjouterProjetRequest;
 use App\Http\Requests\Projet\ModifierProjetRequest;
 use App\Http\Resources\ProjetResource;
 use App\Models\Projet;
+use App\Models\Role;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ProjetController extends Controller
 {
@@ -38,12 +41,25 @@ class ProjetController extends Controller
         $newData->couts = $request->couts;
         $newData->delai = $request->delai;
         $newData->etat = $request->etat;
-        $newData->type_projet_id = $request->type_projet_id;
-        $newData->etat_projet_id = $request->etat_projet_id;
+        $userConnecte = auth()->user()->id;
+        $roleIdUserConnecte = User::find($userConnecte)->first()->role_id;
+
+        if(Role::where('id',$roleIdUserConnecte)->first()->id === $roleIdUserConnecte){
+            // dd('ok');
+            if(Role::where('id',$roleIdUserConnecte)->first()->nom == "Citoyen"){
+                $newData->type_projet_id = 2;
+            }elseif(Role::where('id',$roleIdUserConnecte)->first()->nom == "AdminCommune"){
+                 $newData->type_projet_id = 1;
+               
+            }
+            
+         }
+        // $newData->type_projet_id = $request->type_projet_id;
+         $newData->etat_projet_id = true;
 
         if ($newData->save()) {
             return response()->json(['message' => 'Insertion réussie'], 200);
-        }
+         }
 
         return response()->json(['message' => 'Échec de l\'insertion'], 422);
     }

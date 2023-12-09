@@ -143,13 +143,16 @@ Route::middleware(['auth:sanctum', 'role:Citoyen'])->group(function () {
     //Lister les Commentaires Annonce
     Route::get('/liste/commentaires/annonces', [CommentaireController::class, 'index'])->name('commentaires.lister');
     // Inserer un Etat Projet
-    Route::post('/commentaires/ajouter/{annonce_id}/{user_id}', [CommentaireController::class, 'store'])->name('commentaires.ajouter');
+    Route::post('/commentaires/ajouter/{annonce_id}', [CommentaireController::class, 'store'])->name('commentaires.ajouter');
     // Afficher les details d'un Commentaire unique
     Route::get('/commentaire/detail/{id}', [CommentaireController::class, 'show'])->name('commentaire.detail');
     // Modifier un Commentaires Annonce
     Route::patch('/commentaire/modifier/{commentaire_id}', [CommentaireController::class, 'update'])->name('commentaires.modifier');
     // Archiver un Commentaires Annonce
     Route::patch('/commentaire/archiver/{commentaire_id}/{etat}', [CommentaireController::class, 'archiver'])->name('commentaires.archiver');
+
+    // AJouter des Votes
+    Route::post('/vote/ajouter', [VoteController::class, 'store'])->name('vote.ajouter');
 });
 
 // ---------------------------------LES ACTIONS DU MAIRE-------------------------------
@@ -190,26 +193,13 @@ Route::middleware(['auth:sanctum', 'role:AdminCommune'])->group(function () {
 
     // Liste des Votes
     Route::get('/liste/vote', [VoteController::class, 'index'])->name('vote.lister');
-    // Modification des Votes
-    Route::post('/vote/ajouter', [VoteController::class, 'store'])->name('vote.ajouter');
+
     // Afficher les details d'un vote unique
     Route::get('/vote/detail/{id}', [CommentaireController::class, 'show'])->name('vote.detail');
     // Modification des Votes
     Route::patch('/vote/modification/{vote_id}', [VoteController::class, 'update'])->name('vote.modifier');
     // Supprimer des Votes
     Route::delete('/vote/supprimer/{vote_id}', [VoteController::class, 'destroy'])->name('vote.supprimer');
-});
-
-// -------------------------------------LES ACTIONS DE L'ADMIN COMMUNE & CITOYEN---------------------------------------------------
-
-Route::middleware(['auth:sanctum', 'role:AdminCommune,Citoyen'])->group(function () {
-
-    // Inserer des donnees Projet
-    Route::post('/projet/ajouter', [ProjetController::class, 'store'])->name('projet.ajouter');
-    // Modifier des donnees Projet
-    Route::patch('/projet/modifier/{projet_id}', [ProjetController::class, 'update'])->name('projet.modifier');
-    // Archiver des donnees Projet
-    Route::patch('/projet/archiver/etat/{projet_id}/{etat}', [ProjetController::class, 'archiver'])->name('projet.archiver');
 });
 
 // ---------------------------------LES ROUTES PUBLIC-------------------------------
@@ -239,6 +229,14 @@ Route::put('/reset/password', [UserController::class, 'resetPassword']);
 // ---------------------------------LES ACTIONS COMMUN DES DIFFERENTS USERS-------------------------------
 
 Route::middleware(['auth:sanctum'])->group(function () {
+
+    // Inserer des donnees Projet
+    Route::post('/projet/ajouter', [ProjetController::class, 'store'])->name('projet.ajouter');
+    // Modifier des donnees Projet
+    Route::patch('/projet/modifier/{projet_id}', [ProjetController::class, 'update'])->name('projet.modifier');
+    // Archiver des donnees Projet
+    Route::patch('/projet/archiver/etat/{projet_id}/{etat}', [ProjetController::class, 'archiver'])->name('projet.archiver');
+
     // Pour se deconnecter
     Route::post('/logout', [UserController::class, 'logout']);
 });
