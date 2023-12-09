@@ -25,7 +25,7 @@ class UserRegisterRequest extends FormRequest
         return [
             'nom' => 'required|max:255',
             'prenom' => 'required|max:255',
-            'age'=> 'required',
+            // 'age'=> 'required',
             'email' => 'required|email',
             'password'=> 'required|min:8',
             'telephone'=> ['required', 'regex:/^\+221(77|78|76|70)\d{7}$/'],

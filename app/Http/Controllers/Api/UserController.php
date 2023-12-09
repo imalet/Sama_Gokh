@@ -26,7 +26,7 @@ class UserController extends Controller
             $user->role_id = $request->role_id;
             $user->nom = $request->nom;
             $user->prenom = $request->prenom;
-            $user->age = $request->age;
+            // $user->age = $request->age;
             $user->email = $request->email;
             $user->password = Hash::make($request->password, [
                 'rounds' =>12

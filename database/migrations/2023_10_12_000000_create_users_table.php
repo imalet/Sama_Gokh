@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('telephone');
             $table->string('etat')->default('actif');
             $table->string('username')->unique();
-            $table->string('CNI');
+            $table->integer('CNI');
             $table->enum('sexe',['Masculin', 'Féminin']);
             $table->unsignedBigInteger('role_id');
             $table->foreign('role_id')->references('id')->on('roles');

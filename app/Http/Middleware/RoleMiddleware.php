@@ -20,7 +20,7 @@ class RoleMiddleware
         $roleOnRoleTable = Role::find($request->user()->role_id);
         
         if($roleOnRoleTable->nom != $role ){
-            abort(404);
+            return response()->json(['Message'=>"Desole, vous n'avez pas access"], 404);
         }
         return $next($request);
     }
