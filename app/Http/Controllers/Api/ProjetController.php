@@ -41,25 +41,12 @@ class ProjetController extends Controller
         $newData->couts = $request->couts;
         $newData->delai = $request->delai;
         $newData->etat = $request->etat;
-        $userConnecte = auth()->user()->id;
-        $roleIdUserConnecte = User::find($userConnecte)->first()->role_id;
-
-        if(Role::where('id',$roleIdUserConnecte)->first()->id === $roleIdUserConnecte){
-            // dd('ok');
-            if(Role::where('id',$roleIdUserConnecte)->first()->nom == "Citoyen"){
-                $newData->type_projet_id = 2;
-            }elseif(Role::where('id',$roleIdUserConnecte)->first()->nom == "AdminCommune"){
-                 $newData->type_projet_id = 1;
-               
-            }
-            
-         }
-        // $newData->type_projet_id = $request->type_projet_id;
-         $newData->etat_projet_id = true;
+        $newData->type_projet_id = 1;
+        $newData->etat_projet_id = 1;
 
         if ($newData->save()) {
             return response()->json(['message' => 'Insertion réussie'], 200);
-         }
+        }
 
         return response()->json(['message' => 'Échec de l\'insertion'], 422);
     }
@@ -95,6 +82,7 @@ class ProjetController extends Controller
         $projet->couts = $request->couts;
         $projet->delai = $request->delai;
         $projet->etat = $request->etat;
+
         $projet->type_projet_id = $request->type_projet_id;
         $projet->etat_projet_id = $request->etat_projet_id;
 

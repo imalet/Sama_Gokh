@@ -25,10 +25,10 @@ class AjouterVoteRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'user_id' => 'required|exists:users,id',
+            // 'user_id' => 'required|exists:users,id',
             'statut' => ['required', 'regex:/^(pour|contre)$/i'],
             'projet_id' => 'required|exists:projets,id',
-            'date_de_cloture' => 'required|date',
+            // 'date_de_cloture' => 'required|date',
         ];
     }
 

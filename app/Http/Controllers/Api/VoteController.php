@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Vote\AjouterVoteRequest;
 use App\Http\Requests\Vote\ModifierVoteRequest;
+use App\Http\Resources\VoteResource;
 use App\Models\Vote;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -16,7 +17,7 @@ class VoteController extends Controller
      */
     public function index()
     {
-        return Vote::all();
+        return VoteResource::collection(Vote::all());
     }
 
     /**

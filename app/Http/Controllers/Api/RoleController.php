@@ -11,8 +11,8 @@ use App\Http\Resources\RoleResource;
 class RoleController extends Controller
 {
 
-    public function index(RoleRegisterRequest $request){
-        return response("OK TOP",200);
+    public function index(){
+        return RoleResource::collection(Role::all());
     }
 
     public function store(RoleRegisterRequest $request){

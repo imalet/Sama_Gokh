@@ -22,7 +22,7 @@ return new class extends Migration
             $table->date('delai');
             $table->boolean('etat')->default(true);
             $table->foreignIdFor(TypeProjet::class)->constrained()->cascadeOnDelete();
-            $table->foreignIdFor(EtatProjet::class)->constrained()->cascadeOnDelete();
+            $table->foreignIdFor(EtatProjet::class)->constrained()->cascadeOnDelete(1);
             $table->timestamps();
         });
     }

@@ -207,6 +207,12 @@ Route::middleware(['auth:sanctum', 'role:AdminCommune'])->group(function () {
 // Les Routes de création de comptes utilisateurs
 Route::post('/register', [UserController::class, 'register']);
 
+// Afficher tous les utilisateurs
+Route::get('/liste/utilisateurs', [UserController::class, 'index'])->name('user.lister');
+
+// Afficher un utilisateurs specifique
+Route::get('/detail/utilisateur/{user_id}', [UserController::class, 'show'])->name('user.detail');
+
 //La Routes de connexion  d'un utilisateur
 Route::post('/login', [UserController::class, 'login']);
 

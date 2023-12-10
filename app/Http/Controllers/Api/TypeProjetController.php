@@ -17,7 +17,7 @@ class TypeProjetController extends Controller
      */
     public function index()
     {
-        return TypeProjet::all();
+        return TypeProjetResource::collection(TypeProjet::all());
     }
 
     /**

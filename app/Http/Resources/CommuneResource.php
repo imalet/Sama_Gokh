@@ -20,7 +20,6 @@ class CommuneResource extends JsonResource
         'nombreCitoyen' => $this->nombreCitoyen,
         'image' => $this->image,
         'ville' => $this->when($this->ville, new VilleResource($this->ville)),
-       
     ];
 }
 }
