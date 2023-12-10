@@ -9,6 +9,7 @@ use App\Http\Resources\ProjetResource;
 use App\Models\Projet;
 use App\Models\Role;
 use App\Models\User;
+use Illuminate\Database\Eloquent\Casts\Json;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -57,7 +58,22 @@ class ProjetController extends Controller
     public function show(string $id)
     {
         $projet = Projet::findOrFail($id);
-        return $projet;
+        
+        if (!$projet) {
+            return response()->json(['message'=> 'Le projet que vous recherchez n\'est pas trouvé ']);
+        }
+
+        return response()->json([
+            "id" => $projet->id,
+            "titre" => $projet->titre,
+            "description"=> $projet->description,
+            "image"=> $projet->image,
+            "couts"=> $projet->couts,
+            "delai"=> $projet->delai,
+            "etat"=> $projet->etat,
+            "type_projet_id" => $projet->type_projet_id,
+            "etat_projet_id" => $projet->etat_projet_id
+        ]);
     }
 
     /**

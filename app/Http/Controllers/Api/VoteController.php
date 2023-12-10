@@ -49,11 +49,11 @@ class VoteController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
-    {
-        $vote = Vote::findOrFail($id);
-        return $vote;
-    }
+    // public function show(string $id)
+    // {
+    //     $vote = Vote::findOrFail($id);
+    //     return $vote;
+    // }
 
     /**
      * Show the form for editing the specified resource.

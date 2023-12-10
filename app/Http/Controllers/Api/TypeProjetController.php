@@ -49,7 +49,14 @@ class TypeProjetController extends Controller
     public function show(string $id)
     {
         $type_projet = TypeProjet::findOrFail($id);
-        return $type_projet;
+        if (!$type_projet) {
+            return response()->json(['message'=>'le le statut TYPE Projet que vous recherchez n\'cest pas trouvé']);
+        }
+
+        return response()->json([
+            'id' => $type_projet->id,
+            'nom' => $type_projet->nom
+        ]);
     }
 
     /**

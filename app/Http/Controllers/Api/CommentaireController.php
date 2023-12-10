@@ -44,7 +44,6 @@ class CommentaireController extends Controller
         }
 
         return response()->json(["Message"=>"Insertion Echoué"],422);
-
         
     }
 
@@ -54,7 +53,17 @@ class CommentaireController extends Controller
     public function show(string $id)
     {
         $commentaire = Commentaire::findOrFail($id);
-        return $commentaire;
+
+        if (!$commentaire) {
+            return response()->json(['Désolé, Personne Non Trouvé']);
+        }
+
+        return response()->json([
+            'annonce_id' => $commentaire->annonce_id,
+            'contenu' => $commentaire->contenu,
+            'user_id' => $commentaire->user_id,
+            'etat' => $commentaire->etat
+        ]);
     }
 
     /**

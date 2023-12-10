@@ -39,10 +39,10 @@ class AnnonceController extends Controller
         $newData->user_id = 1;
 
         if ($newData->save()) {
-            return response()->json(['message'=>'Insertion Reussi'],200);
+            return response()->json(['message' => 'Insertion Reussi'], 200);
         }
 
-        return response()->json(['message'=>'Échec de l\'insertion'],422);
+        return response()->json(['message' => 'Échec de l\'insertion'], 422);
     }
 
     /**
@@ -50,8 +50,20 @@ class AnnonceController extends Controller
      */
     public function show(string $id)
     {
-        $annonce = Annonce::findOrfail($id);
-        return $annonce;
+        $annonce = Annonce::findOrFail($id);
+
+        if (!$annonce) {
+            return response()->json(["Desole, l'Annonce n'as pas etait trouvé"]);
+        }
+
+        return response()->json([
+            "titre" => $annonce->titre,
+            "description" => $annonce->description,
+            "image" => $annonce->image,
+            "couts" => $annonce->couts,
+            "delai" => $annonce->delai,
+            "etat" => $annonce->etat
+        ]);
     }
 
     /**
@@ -59,7 +71,6 @@ class AnnonceController extends Controller
      */
     public function edit(string $id)
     {
-        
     }
 
     /**
@@ -75,10 +86,10 @@ class AnnonceController extends Controller
         $annonce->etat = $request->etat;
 
         if ($annonce->save()) {
-            return response()->json(["message"=>"Annonce modifié Avec Success", 200]);
+            return response()->json(["message" => "Annonce modifié Avec Success", 200]);
         }
 
-        return response()->json(['message'=>"Erreur d'Insertion"],422);
+        return response()->json(['message' => "Erreur d'Insertion"], 422);
     }
 
     /**
@@ -86,7 +97,7 @@ class AnnonceController extends Controller
      */
     public function archiver(string $id, string $etat)
     {
-        
+
         $projet = Annonce::findOrFail($id);
         $projet->etat = $etat;
         $projet->save();
@@ -101,6 +112,4 @@ class AnnonceController extends Controller
     {
         //
     }
-
-
 }

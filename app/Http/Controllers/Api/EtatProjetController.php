@@ -14,7 +14,7 @@ class EtatProjetController extends Controller
      */
     public function index()
     {
-        return EtatProjet::all();
+        return EtatProjetResource::collection(EtatProjet::all());
     }
 
     /**
@@ -43,7 +43,15 @@ class EtatProjetController extends Controller
     public function show(string $id)
     {
         $etat_projet = EtatProjet::findOrFail($id);
-        return $etat_projet;
+
+        if (!$etat_projet) {
+            return response()->json(["Desole, l'Etat que peut avoir un projet n'est pas trouvé"]);
+        }
+
+        return response()->json([
+            'id' => $etat_projet->id,
+            'nom' => $etat_projet->nom,
+        ]);
     }
 
     /**
