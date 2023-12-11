@@ -1,0 +1,42 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "endpoint des annonces",
+        "version": "0.1"
+    },
+    "paths": {
+        "/annonce/ajouter": {
+            "post": {
+                "summary": "Enregistrer une annonce",
+                "operationId": "398f3adeac41f53bc92db7f756b5234a",
+                "responses": {
+                    "200": {
+                        "description": "Annonce inséré avec succès"
+                    }
+                }
+            }
+        },
+        "annonce/modifier/{annonce_id}": {
+            "patch": {
+                "summary": "Mettre à jour une annonce",
+                "operationId": "0efac8d9e5cfb3ea3cbd2088b0cea998",
+                "responses": {
+                    "200": {
+                        "description": "Annonce modifié Avec Succès"
+                    }
+                }
+            }
+        },
+        "annonce/archiver/etat/{annonce_id}": {
+            "patch": {
+                "summary": "Archiver une annonce",
+                "operationId": "d74f2684187d43c0ee4be8f503ba611b",
+                "responses": {
+                    "200": {
+                        "description": "Annonce archivé avec succès"
+                    }
+                }
+            }
+        }
+    }
+}

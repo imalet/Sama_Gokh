@@ -1,0 +1,218 @@
+{
+    "openapi": "3.0.0",
+    "paths": {
+        "/projets": {
+            "get": {
+                "tags": [
+                    "Projets"
+                ],
+                "summary": "Obtenir la liste des projets",
+                "operationId": "13093b97ded43a87fdedf1283686a825",
+                "responses": {
+                    "200": {
+                        "description": "Liste des projets",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/ProjetResource"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": []
+            },
+            "post": {
+                "tags": [
+                    "Projets"
+                ],
+                "summary": "Créer un nouveau projet",
+                "operationId": "2227a0a3559a50520b8c1047a0741e8c",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "titre",
+                                    "description",
+                                    "image",
+                                    "couts",
+                                    "delai"
+                                ],
+                                "properties": {
+                                    "titre": {
+                                        "type": "string",
+                                        "example": "Titre du projet"
+                                    },
+                                    "description": {
+                                        "type": "string",
+                                        "example": "Description du projet"
+                                    },
+                                    "image": {
+                                        "description": "Image du projet",
+                                        "type": "string",
+                                        "format": "binary"
+                                    },
+                                    "couts": {
+                                        "type": "integer",
+                                        "example": 10000
+                                    },
+                                    "delai": {
+                                        "type": "string",
+                                        "example": "2023-12-31"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Projet créé avec succès",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/ProjetResource"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Échec de l'insertion",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "message": {
+                                                "type": "string",
+                                                "example": "Échec de l'insertion"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": []
+            }
+        },
+        "/projets/{id}": {
+            "put": {
+                "tags": [
+                    "Projets"
+                ],
+                "summary": "Modifier un projet existant",
+                "operationId": "79d30654463b3888c9d6d58d527fad60",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID du projet à modifier",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "titre",
+                                    "description",
+                                    "couts",
+                                    "delai"
+                                ],
+                                "properties": {
+                                    "titre": {
+                                        "type": "string",
+                                        "example": "Nouveau titre"
+                                    },
+                                    "description": {
+                                        "type": "string",
+                                        "example": "Nouvelle description"
+                                    },
+                                    "couts": {
+                                        "type": "integer",
+                                        "example": 15000
+                                    },
+                                    "delai": {
+                                        "type": "string",
+                                        "example": "2024-01-31 13:00"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Modification réussie du projet",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "string"
+                                },
+                                "example": "Modification du projet réussie"
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Vous ne pouvez pas modifier ce projet",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "message": {
+                                                "type": "string",
+                                                "example": "Vous ne pouvez pas modifier ce projet"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Projet non trouvé",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "message": {
+                                                "type": "string",
+                                                "example": "Projet non trouvé"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": []
+            }
+        }
+    }
+}

@@ -1,0 +1,364 @@
+{
+    "openapi": "3.0.0",
+    "paths": {
+        "/commentaires": {
+            "get": {
+                "tags": [
+                    "Commentaires"
+                ],
+                "summary": "Récupérer tous les commentaires",
+                "operationId": "c204fa39dd38ec49f4ccc9dc202ab19c",
+                "responses": {
+                    "200": {
+                        "description": "Liste de tous les commentaires",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/CommentaireResource"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/commentaires/ajouter/{annonce_id}": {
+            "post": {
+                "tags": [
+                    "Commentaires"
+                ],
+                "summary": "Ajouter un commentaire à une annonce",
+                "operationId": "654d97aeacae94245dc288ed640e9338",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de l'annonce à laquelle ajouter un commentaire",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "contenu"
+                                ],
+                                "properties": {
+                                    "contenu": {
+                                        "type": "string",
+                                        "example": "Contenu du commentaire"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Insertion de commentaire réussie",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "Message": {
+                                                "type": "string",
+                                                "example": "Insertion de Commentaire"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Insertion de commentaire échouée",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "Message": {
+                                                "type": "string",
+                                                "example": "Insertion Echoué"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/commentaire/detail/{id}": {
+            "get": {
+                "tags": [
+                    "Commentaires"
+                ],
+                "summary": "Récupérer un commentaire par son ID",
+                "operationId": "efca9e88b7d9c674d0b4c750e8ae5100",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID du commentaire à récupérer",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Commentaire récupéré avec succès",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Commentaire"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Commentaire non trouvé",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "message": {
+                                                "type": "string",
+                                                "example": "Commentaire non trouvé"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/commentaire/modifier/{commentaire_id}": {
+            "put": {
+                "tags": [
+                    "Commentaires"
+                ],
+                "summary": "Mettre à jour un commentaire par son ID",
+                "operationId": "7fe1ad5ce0c2ffff211d1f80a8404a9d",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID du commentaire à mettre à jour",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "contenu"
+                                ],
+                                "properties": {
+                                    "contenu": {
+                                        "type": "string",
+                                        "example": "Nouveau contenu du commentaire"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Commentaire sauvegardé avec succès",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "message": {
+                                                "type": "string",
+                                                "example": "Commentaire sauvegardé"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Vous ne pouvez pas modifier ce commentaire",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "message": {
+                                                "type": "string",
+                                                "example": "Vous ne pouvez pas modifier ce commentaire"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Commentaire non trouvé",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "message": {
+                                                "type": "string",
+                                                "example": "Commentaire non trouvé"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/commentaire/archiver/{commentaire_id}": {
+            "put": {
+                "tags": [
+                    "Commentaires"
+                ],
+                "summary": "Archiver un commentaire par son ID",
+                "operationId": "2080cf15d6136769e976aa3feaf44b72",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID du commentaire à archiver",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Commentaire archivé avec succès",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "message": {
+                                                "type": "string",
+                                                "example": "Commentaire archivé avec succès"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Vous ne pouvez pas archiver ce commentaire",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "message": {
+                                                "type": "string",
+                                                "example": "Vous ne pouvez pas archiver ce commentaire"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Commentaire non trouvé",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "message": {
+                                                "type": "string",
+                                                "example": "Commentaire non trouvé"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        }
+    }
+}
