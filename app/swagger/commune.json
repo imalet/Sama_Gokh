@@ -1,0 +1,181 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Endpoint de communes",
+        "description": "Le endpoint de  toutes les actions concernant villes",
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/api/communes": {
+            "get": {
+                "summary": "Récupérer la liste des communes",
+                "description": "Récupère la liste des communes avec pagination et possibilité de recherche par nom.",
+                "operationId": "16a79a22dd454df77f80c7bc5f48859b",
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Numéro de page",
+                        "schema": {
+                            "type": "integer",
+                            "default": 5
+                        }
+                    },
+                    {
+                        "name": "search",
+                        "in": "query",
+                        "description": "Terme de recherche pour filtrer les communes par nom",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Toutes les communes ont été récupérées."
+                    },
+                    "500": {
+                        "description": "Erreur interne du serveur"
+                    }
+                }
+            }
+        },
+        "/api/commune/store": {
+            "post": {
+                "summary": "Ajouter une nouvelle commune",
+                "description": "Ajoute une nouvelle commune à la base de données.",
+                "operationId": "2210e550d7724cd1ef22dbba3c1e5b8d",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "nom": {
+                                        "description": "Nom de la commune",
+                                        "type": "string"
+                                    },
+                                    "image": {
+                                        "description": "Image de la commune",
+                                        "type": "string",
+                                        "format": "binary"
+                                    },
+                                    "nombreCitoyen": {
+                                        "description": "Nombre de citoyens dans la commune",
+                                        "type": "integer"
+                                    },
+                                    "ville_id": {
+                                        "description": "ID de la ville associée à la commune",
+                                        "type": "integer"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Nouvelle commune ajoutée avec succès"
+                    },
+                    "422": {
+                        "description": "Erreur de validation des données"
+                    },
+                    "500": {
+                        "description": "Erreur interne du serveur"
+                    }
+                }
+            }
+        },
+        "/api/commune/detail/{id}": {
+            "get": {
+                "summary": "Afficher les détails d'une commune",
+                "description": "Récupère les détails d'une commune spécifiée par son ID.",
+                "operationId": "3d6aca6e7f93f519bc3c396eb08ec909",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de la commune",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Détails de la commune"
+                    },
+                    "404": {
+                        "description": "Commune non trouvée"
+                    },
+                    "500": {
+                        "description": "Erreur interne du serveur"
+                    }
+                }
+            }
+        },
+        "/api/commune/update/{commune}": {
+            "put": {
+                "summary": "Modifier une commune existante",
+                "description": "Modifie les détails d'une commune existante spécifiée par son ID.",
+                "operationId": "5154214b5498d82bcd6d793dbe705f64",
+                "parameters": [
+                    {
+                        "name": "commune",
+                        "in": "path",
+                        "description": "ID de la commune à modifier",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "nom": {
+                                        "description": "Nouveau nom de la commune",
+                                        "type": "string"
+                                    },
+                                    "image": {
+                                        "description": "Nouvelle image de la commune",
+                                        "type": "string",
+                                        "format": "binary"
+                                    },
+                                    "nombreCitoyen": {
+                                        "description": "Nouveau nombre de citoyens dans la commune",
+                                        "type": "integer"
+                                    },
+                                    "ville_id": {
+                                        "description": "Nouvel ID de la ville associée à la commune",
+                                        "type": "integer"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "La commune a été modifiée avec succès"
+                    },
+                    "404": {
+                        "description": "Commune non trouvée"
+                    },
+                    "422": {
+                        "description": "Erreur de validation des données"
+                    },
+                    "500": {
+                        "description": "Erreur interne du serveur"
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,155 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Endpoint des rôles",
+        "description": "Le endpoint de  toutes les actions concernant villes",
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/api/roles": {
+            "get": {
+                "summary": "Récupérer la liste des rôles",
+                "description": "Récupère la liste des rôles avec pagination et possibilité de recherche par nom.",
+                "operationId": "ca86f0a206144dfbd695b749b4b28f9d",
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Numéro de page",
+                        "schema": {
+                            "type": "integer",
+                            "default": 5
+                        }
+                    },
+                    {
+                        "name": "search",
+                        "in": "query",
+                        "description": "Terme de recherche pour filtrer les rôles par nom",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Toutes les rôles ont été récupérées."
+                    },
+                    "500": {
+                        "description": "Erreur interne du serveur"
+                    }
+                }
+            }
+        },
+        "/api/role/store": {
+            "post": {
+                "summary": "Récupérer la liste des rôles",
+                "description": "Récupère la liste des rôles avec pagination et possibilité de recherche par nom.",
+                "operationId": "9f91ab35c9924ca6dd84976be71f89c2",
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Numéro de page",
+                        "schema": {
+                            "type": "integer",
+                            "default": 5
+                        }
+                    },
+                    {
+                        "name": "search",
+                        "in": "query",
+                        "description": "Terme de recherche pour filtrer les rôles par nom",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Toutes les rôles ont été récupérées."
+                    },
+                    "500": {
+                        "description": "Erreur interne du serveur"
+                    }
+                }
+            }
+        },
+        "/api/role/detail/{id}'": {
+            "get": {
+                "summary": "Afficher les détails d'un rôle",
+                "description": "Récupère les détails d'un rôle spécifié par son ID.",
+                "operationId": "8cbf5d4a45e7bd5af49819747b395685",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID du rôle",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Détails du rôle"
+                    },
+                    "404": {
+                        "description": "Rôle non trouvé"
+                    },
+                    "500": {
+                        "description": "Erreur interne du serveur"
+                    }
+                }
+            }
+        },
+        "/api/role/update/{role}": {
+            "put": {
+                "summary": "Modifier un rôle existant",
+                "description": "Modifie les détails d'un rôle existant spécifié par son ID.",
+                "operationId": "e54425d5b1777225a455a813bd773822",
+                "parameters": [
+                    {
+                        "name": "role",
+                        "in": "path",
+                        "description": "ID du rôle à modifier",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "nom": {
+                                        "description": "Nouveau nom du rôle",
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Le nom du rôle a été modifié avec succès"
+                    },
+                    "404": {
+                        "description": "Rôle non trouvé"
+                    },
+                    "422": {
+                        "description": "Erreur de validation des données"
+                    },
+                    "500": {
+                        "description": "Erreur interne du serveur"
+                    }
+                }
+            }
+        }
+    }
+}

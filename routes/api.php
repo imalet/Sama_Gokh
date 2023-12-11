@@ -26,6 +26,7 @@ use App\Http\Controllers\Api\UserController;
 use App\Http\Resources\AdmincommuneResource;
 use App\Http\Controllers\Api\MaireController;
 use App\Http\Controllers\Api\AdmincommuneController;
+use App\Http\Resources\ProjetResource;
 use GuzzleHttp\Middleware;
 
 /*
@@ -155,8 +156,7 @@ Route::middleware(['auth:sanctum', 'role:SuperAdmin'])->group(function () {
     Route::put('/superadmin/update/{user}', [UserController::class, 'update']);
 
     //Archiver les informations un compte Super Admin
-     Route::put('/archive/superadmin/{user}', [UserController::class, 'archive']);
-
+    Route::put('/archive/superadmin/{user}', [UserController::class, 'archive']);
 });
 
 // ---------------------------------LES ACTIONS DU CITOYEN-------------------------------

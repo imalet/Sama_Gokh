@@ -1,3 +1,240 @@
 {
-    "openapi": "3.0.0"
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Endpoint de villes",
+        "description": "Le endpoint de  toutes les actions concernant villes",
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/api/villes": {
+            "get": {
+                "summary": "Récupérer la liste des villes",
+                "description": "Récupère la liste des villes avec pagination et possibilité de recherche par nom.",
+                "operationId": "2c38f4a12cf38b1ec9723fa4d0e607e5",
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Numéro de page (par défaut à 5)",
+                        "schema": {
+                            "type": "integer",
+                            "default": 5
+                        }
+                    },
+                    {
+                        "name": "search",
+                        "in": "query",
+                        "description": "Terme de recherche pour filtrer les villes par nom",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Liste des villes",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "statut_message": {
+                                            "type": "string",
+                                            "example": "Toutes les villes ont été récupérées."
+                                        },
+                                        "statut_code": {
+                                            "type": "integer",
+                                            "example": 200
+                                        },
+                                        "current_page": {
+                                            "type": "integer"
+                                        },
+                                        "last_page": {
+                                            "type": "integer"
+                                        },
+                                        "items": {
+                                            "type": "array",
+                                            "items": {}
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Erreur interne du serveur"
+                    }
+                }
+            },
+            "post": {
+                "summary": "Insérer des villes dans la base de données",
+                "description": "Ajoute une nouvelle ville à la base de données.",
+                "operationId": "e71fbfa37f700ddcd95fa4f097653daf",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "nom": {
+                                        "description": "Nom de la nouvelle ville",
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Ville enregistrée avec succès",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "statut_code": {
+                                            "type": "integer",
+                                            "example": 200
+                                        },
+                                        "statut_message": {
+                                            "type": "string",
+                                            "example": "Nouvelle ville ajoutée avec succès"
+                                        },
+                                        "ville": {
+                                            "$ref": "#/components/schemas/Ville"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Erreur de validation des données"
+                    },
+                    "500": {
+                        "description": "Erreur interne du serveur"
+                    }
+                }
+            }
+        },
+        "/api/villes/detail/{id}": {
+            "get": {
+                "summary": "Afficher les informations d'une ville précise",
+                "description": "Récupère les informations d'une ville spécifiée par son ID.",
+                "operationId": "8d5b04459e89a364e24572a7cacdbc4e",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de la ville",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Les informations de la ville.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "statut_code": {
+                                            "type": "integer",
+                                            "example": 200
+                                        },
+                                        "statut_message": {
+                                            "type": "string",
+                                            "example": "Informations de la ville récupérées avec succès"
+                                        },
+                                        "ville": {
+                                            "$ref": "#/components/schemas/Ville"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Ville non trouvée"
+                    },
+                    "500": {
+                        "description": "Erreur interne du serveur"
+                    }
+                }
+            }
+        },
+        "/api/villes/update/{ville}": {
+            "put": {
+                "summary": "Modifie les informations d'une ville précise.",
+                "description": "Modifie les informations d'une ville spécifiée par son ID.",
+                "operationId": "84ee4f2b0d717487dfc6f802336ec457",
+                "parameters": [
+                    {
+                        "name": "ville",
+                        "in": "path",
+                        "description": "ID de la ville à modifier",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "nom": {
+                                        "description": "Nouveau nom de la ville",
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Les informations de la ville ont été modifiées.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "statut_code": {
+                                            "type": "integer",
+                                            "example": 200
+                                        },
+                                        "statut_message": {
+                                            "type": "string",
+                                            "example": "Le nom de la ville a été modifié avec succès"
+                                        },
+                                        "ville": {
+                                            "$ref": "#/components/schemas/Ville"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Ville non trouvée"
+                    },
+                    "422": {
+                        "description": "Erreur de validation des données"
+                    },
+                    "500": {
+                        "description": "Erreur interne du serveur"
+                    }
+                }
+            }
+        }
+    }
 }
