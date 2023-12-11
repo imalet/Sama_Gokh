@@ -27,7 +27,7 @@ class AjouterProjetRequest extends FormRequest
         return [
             'titre' => 'required|string|max:255',
             'description' => 'required|string',
-            'image' => 'required|string',
+            'image' => 'required|image',
             'couts' => 'required|numeric',
             'delai' => 'required|date',
             'etat' => ['required','boolean'],

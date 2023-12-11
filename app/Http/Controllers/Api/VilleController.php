@@ -8,12 +8,27 @@ use App\Http\Requests\UpdateVilleRequest;
 use App\Models\Ville;
 use Exception;
 use Illuminate\Http\Request;
+use OpenApi\Annotations as OA;
+
+/**
+ * @OA\Info(title="endpoint de Villes", version="0.1")
+ */
 
 class VilleController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
+
+    /**
+     * @OA\Get(
+     *     get="/api/villes",
+     *     summary="Afficher la liste des villes",
+     *     @OA\Response(response="200", description=" La liste des villes récupérées.")
+     * )   
+     */
+
+     
     public function index(Request $request)
     {
         try {
@@ -33,7 +48,7 @@ class VilleController extends Controller
 
 
             return response()->json([
-                'statut_message' => 'Toutes les villes on été récupérées.',
+                'statut_message' => 'Toutes les villes ont été récupérées.',
                 'statut_code' => 200,
                 // 'statut_code'=> Ville::all() ,
                 'current_page' => $page,
@@ -56,6 +71,15 @@ class VilleController extends Controller
     /**
      * Store a newly created resource in storage.
      */
+
+    /**
+     * @OA\Post(
+     *     post="/api/ville/store",
+     *     summary="Insérer des villes dans la base de données",
+     *     @OA\Response(response="200", description=" Ville enregistrée avec succès.")
+     * )   
+     */
+
     public function store(CreateVilleRequest $request)
     {
 

@@ -50,7 +50,7 @@ Route::middleware(['auth:sanctum', 'role:SuperAdmin'])->group(function () {
     // Ajouter un role dans la base de données 
     Route::post('/role/store', [RoleController::class, 'store'])->name("role.add");
 
-    // Afficher les details d'une role unique
+    // Afficher les details d'un role unique
     Route::get('role/detail/{id}', [RoleController::class, 'show'])->name('role.detail');
 
     // Modifier un role 
@@ -118,7 +118,7 @@ Route::middleware(['auth:sanctum', 'role:SuperAdmin'])->group(function () {
 
     // ----------------------------------------TYPE PROJET----------------------------------------
 
-    // Toutes les Type Projet
+    // Toutes les Types de Projet
     Route::get('/liste/type/projet', [TypeProjetController::class, 'index'])->name('type.projet.lister');
     // Inserer un Etat Projet
     Route::post('/type/projet/ajouter', [TypeProjetController::class, 'store'])->name('type.projet.ajouter');
