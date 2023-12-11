@@ -16,9 +16,9 @@ return new class extends Migration
         Schema::create('votes', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(User::class)->constrained()->cascadeOnDelete();
-            $table->enum('statut',['pour', 'contre']);
+            $table->enum('scrutin',['pour', 'contre']);
             $table->foreignIdFor(Projet::class)->constrained()->cascadeOnDelete();
-            $table->date('date_de_cloture');
+            // $table->date('date_de_cloture');
             $table->timestamps();
         });
     }

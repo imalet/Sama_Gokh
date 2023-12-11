@@ -2,6 +2,7 @@
 
 use App\Models\EtatProjet;
 use App\Models\TypeProjet;
+use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -21,6 +22,7 @@ return new class extends Migration
             $table->integer('couts');
             $table->date('delai');
             $table->boolean('etat')->default(true);
+            $table->foreignIdFor(User::class)->constrained()->cascadeOnDelete();
             $table->foreignIdFor(TypeProjet::class)->constrained()->cascadeOnDelete();
             $table->foreignIdFor(EtatProjet::class)->constrained()->cascadeOnDelete();
             $table->timestamps();

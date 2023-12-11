@@ -7,11 +7,13 @@ use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\EditCitizenRequest;
+use App\Http\Requests\LogOutRequest;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\LogUserRequest;
-use App\Http\Requests\resetPasswordRequest;
+use App\Http\Requests\EditCitizenRequest;
 use App\Http\Requests\UserRegisterRequest;
+use App\Http\Requests\resetPasswordRequest;
+use App\Models\Ville;
 
 class UserController extends Controller
 {
@@ -23,7 +25,10 @@ class UserController extends Controller
             // $request->validate($this->rules(), $this->messages());
             //  dd($request);
             $user = new User();
-            $user->role_id = $request->role_id;
+             $idCitoyen = Role::where("nom", "Citoyen")->get()->first()->id;
+            // dd($idCitoyen);
+            //$idCitoyen;
+            $user->role_id = $idCitoyen;
             $user->nom = $request->nom;
             $user->prenom = $request->prenom;
             // $user->age = $request->age;
@@ -35,7 +40,20 @@ class UserController extends Controller
             $user->username = $request->username;
             $user->CNI = $request->CNI;
             $user->sexe = $request->sexe;
-            $user->commune_id = $request->commune_id;
+            $villes = [
+                "Dakar"=>["Yoff", "Ngor"],
+                "Thiès"=>["Mbour", "Thiès Nord"],
+            ];
+            foreach($villes as $key=>$ville){
+
+                 if( in_array($request->commune, $ville)){
+                    //  dd($key);
+                    //  Ville::where($key)->get()->first()->id
+                     $user->commune_id = Ville::where("nom",$key)->get()->first()->id;
+                 }
+                // dd($key);
+            }
+           
             // dd($user);
             $user->save();
             // dd('ok');
@@ -52,7 +70,7 @@ class UserController extends Controller
         if(auth()->attempt($request->only(['username', 'password']))){
 
             $user = auth()->user();
-            if($user->etat ==  "actif"){
+            if($user->etat ==  true){
                 //  dd($user);
             $token = $user->createToken('SESAM_OUVRE_TOI')->plainTextToken;
             return response()->json([
@@ -75,7 +93,7 @@ class UserController extends Controller
             ]);
         }
     }
-    public function logout(LogUserRequest $request){
+    public function logout(LogOutRequest $request){
         $request->user()->currentAccessToken()->delete();
         return response()->json([
             'status_code'=>200,
@@ -115,13 +133,14 @@ class UserController extends Controller
             return response()->json($e);
         }
     }
-    public function archive(User $user){
+    public function archive(Request $request, User $user){
         try{
             
             // dd($user);
             if($user->id == auth()->user()->id){
-                $user->etat = "inactif";
+                $user->etat = false;
                 $user->save();
+                $request->user()->currentAccessToken()->delete();
                 return response()->json([
                     'status_code'=>200,
                     'status_message'=> "La désactivation du compte est réussie"

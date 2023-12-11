@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Models\Vote;
+use App\Models\Projet;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\Vote\AjouterVoteRequest;
 use App\Http\Requests\Vote\ModifierVoteRequest;
-use App\Models\Vote;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class VoteController extends Controller
 {
@@ -30,18 +31,26 @@ class VoteController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(AjouterVoteRequest $request)
+    public function store(AjouterVoteRequest $request, Projet $projet)
     {
         $newData = new Vote();
-        $newData->user_id = auth()->user()->id;
-        $newData->statut = $request->statut;
-        $newData->projet_id = $request->projet_id;
-        $newData->date_de_cloture = $request->date_de_cloture;
+        $votes = Vote::all();
+        foreach($votes as $vote){
+            if($vote->user_id != auth()->user()->id){
+                $newData->user_id = auth()->user()->id;
+                $newData->scrutin = $request->scrutin;
+                $newData->projet_id =$projet->id;
+                // $newData->date_de_cloture = $request->date_de_cloture;
 
         if ($newData->save()) {
             return response()->json(["Message"=>"Insertion d'un vote Reussi"],200);
         }
         return response()->json(["Message"=>"Insertion d'un vote Echoué"],422);
+            }else{
+                return response()->json(["Message"=>"Vous avez déjà voté"],422);
+            }
+        }
+        
 
     }
 

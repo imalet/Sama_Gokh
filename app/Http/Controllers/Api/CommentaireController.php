@@ -31,12 +31,12 @@ class CommentaireController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(AjouterCommentaireRequest $request)
+    public function store(AjouterCommentaireRequest $request, $id)
     {
         $newData = new Commentaire();
-        $newData->annonce_id = $request->annonce_id;
+        $newData->annonce_id = $id;
         $newData->contenu = $request->contenu;
-        $newData->user_id = Auth::user()->id;
+        $newData->user_id = auth()->user()->id;
         // $newData->user_id = $request->user_id;
 
         if ($newData->save()) {
@@ -71,22 +71,35 @@ class CommentaireController extends Controller
     public function update(ModifierCommentaireRequest $request, string $id)
     {
         $commentaire = Commentaire::findOrFail($id);
-        $commentaire->contenu = $request->contenu;
+        // dd($commentaire);
+        // dd(auth()->user()->id);
+        if(auth()->user()->id == $commentaire->user_id){
+            // dd("ok");
+            $commentaire->contenu = $request->contenu;
+            $commentaire->save();
+            return response()->json('Commentaire sauvegardé', 200);
+        }else{
+            return response()->json('Vous ne pouvez pas modifier ce commentaire', 403);
+        }
+        
 
-        $commentaire->save();
-        return response('update Commentaire OK', 200);
+        // 
+        
     }
 
     /**
      * Remove the archieve resource from storage.
      */
-    public function archiver(string $id, string $etat)
+    public function archiver(string $id)
     {
         
         $commentaire = Commentaire::findOrFail($id);
-        $commentaire->etat = $etat;
-        $commentaire->save();
-
-        return response('Archiver Commentaire OK', 200);
+        if(auth()->user()->id == $commentaire->user_id){
+            $commentaire->etat = false;
+            $commentaire->save();
+    
+            return response()->json('Archiver Commentaire OK', 200);
+        }
+       
     }
 }

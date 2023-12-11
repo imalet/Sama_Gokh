@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers\Api;
 
+use Exception;
+use App\Models\Ville;
+use App\Models\Commune;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateCommuneRequest;
 use App\Http\Requests\UpdateCommuneRequest;
-use App\Models\Commune;
-use Exception;
-use Illuminate\Http\Request;
 
 class CommuneController extends Controller
 {
@@ -72,7 +73,16 @@ class CommuneController extends Controller
                 $commune['image'] = $filename;
             }
             $commune->nombreCitoyen = $request->nombreCitoyen;
-            $commune->ville_id = $request->ville_id;
+            $villes = [
+                "Dakar"=>["Yoff", "Ngor"],
+                "Thiès"=>["Mbour", "Thiès Nord"],
+            ];
+            foreach($villes as $key=>$ville){
+                if(in_array($request->nom, $ville)){
+                    $commune->ville_id = Ville::where("nom", $key)->get()->first()->id;
+                }
+            }
+             
 
             $commune->save();
 

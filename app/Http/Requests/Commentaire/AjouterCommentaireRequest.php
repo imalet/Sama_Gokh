@@ -25,9 +25,9 @@ class AjouterCommentaireRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'annonce_id' => 'required|exists:annonces,id',
+            'annonce_id' => 'exists:annonces,id',
             'contenu' => 'required|string',
-            'user_id' => 'required|exists:users,id'
+            'user_id' => 'exists:users,id'
         ];
     }
 

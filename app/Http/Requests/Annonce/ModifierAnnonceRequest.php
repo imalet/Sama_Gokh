@@ -26,9 +26,9 @@ class ModifierAnnonceRequest extends FormRequest
     {
         return [
             'titre' => 'required|string|max:255',
-            'image' => 'required|string',
+            // 'image' => 'required|string',
             'description' => 'required|string',
-            'etat' => ['required', 'boolean'],
+            // 'etat' => ['required', 'boolean'],
         ];
     }
 

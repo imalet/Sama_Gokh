@@ -149,10 +149,10 @@ Route::middleware(['auth:sanctum', 'role:Citoyen'])->group(function () {
     // Modifier un Commentaires Annonce
     Route::patch('/commentaire/modifier/{commentaire_id}', [CommentaireController::class, 'update'])->name('commentaires.modifier');
     // Archiver un Commentaires Annonce
-    Route::patch('/commentaire/archiver/{commentaire_id}/{etat}', [CommentaireController::class, 'archiver'])->name('commentaires.archiver');
+    Route::patch('/commentaire/archiver/{commentaire_id}', [CommentaireController::class, 'archiver'])->name('commentaires.archiver');
 
     // AJouter des Votes
-    Route::post('/vote/ajouter', [VoteController::class, 'store'])->name('vote.ajouter');
+    Route::post('/vote/ajouter/{projet}', [VoteController::class, 'store'])->name('vote.ajouter');
 });
 
 // ---------------------------------LES ACTIONS DU MAIRE-------------------------------
@@ -188,7 +188,7 @@ Route::middleware(['auth:sanctum', 'role:AdminCommune'])->group(function () {
     // Modifier des donnees Projet
     Route::patch('/annonce/modifier/{annonce_id}', [AnnonceController::class, 'update'])->name('annonce.modifier');
     // Archiver des donnees Projet
-    Route::patch('/annonce/archiver/etat/{annonce_id}/{etat}', [AnnonceController::class, 'archiver'])->name('annonce.archiver');
+    Route::patch('/annonce/archiver/etat/{annonce_id}', [AnnonceController::class, 'archiver'])->name('annonce.archiver');
 
 
     // Liste des Votes
@@ -226,7 +226,7 @@ Route::get('/detail/projet/{id}', [ProjetController::class, 'show'])->name('proj
 Route::put('/reset/password', [UserController::class, 'resetPassword']);
 
 
-// ---------------------------------LES ACTIONS COMMUN DES DIFFERENTS USERS-------------------------------
+// ---------------------------------LES ACTIONS COMMUN DES DIFFERENTS USERS CONNECTES-------------------------------
 
 Route::middleware(['auth:sanctum'])->group(function () {
 
