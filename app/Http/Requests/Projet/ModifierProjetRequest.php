@@ -27,12 +27,12 @@ class ModifierProjetRequest extends FormRequest
         return [
             'titre' => 'required|string|max:255',
             'description' => 'required|string',
-            'image' => 'required|string',
+            // 'image' => 'required',
             'couts' => 'required|numeric',
             'delai' => 'required|date',
-            'etat' => 'required|boolean',
-            'type_projet_id' => 'required|exists:type_projets,id',
-            'etat_projet_id' => 'required|exists:etat_projets,id',
+            // 'etat' => 'required|boolean',
+            // 'type_projet_id' => 'required|exists:type_projets,id',
+            // 'etat_projet_id' => 'required|exists:etat_projets,id',
         ];
     }
 

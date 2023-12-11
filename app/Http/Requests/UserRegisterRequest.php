@@ -29,8 +29,8 @@ class UserRegisterRequest extends FormRequest
             'email' => 'required|email',
             'password'=> 'required|min:8',
             'telephone'=> ['required', 'regex:/^\+221(77|78|76|70)\d{7}$/'],
-            'username' => 'required|max:255',
-            'CNI' => 'required|numeric',
+            'username' => 'required|max:255|unique:users,username',
+            'CNI' => 'required|numeric|unique:users,CNI',
              'sexe' => 'required'
 
         ];
@@ -46,9 +46,9 @@ class UserRegisterRequest extends FormRequest
             // 'email.exists'=> "L'email n'existe pas !",
             'password.required' => "Le mot de passe est requis",
             'username.required' => "Le nom d'utilisateur  est requis",
-            // 'username.unique' => "Ce nom d'utilisateur existe déjà",
+            'username.unique' => "Ce nom d'utilisateur existe déjà",
             'CNI.required' => "Le CNI  est requis",
-            // 'CNI.unique' => "Ce CNI existe déjà",
+            'CNI.unique' => "Ce CNI existe déjà",
             'sexe.required' => "veuillez renseigner votre sexe"
         ];
     }

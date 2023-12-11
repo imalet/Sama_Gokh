@@ -18,9 +18,9 @@ return new class extends Migration
             $table->string('email');
             $table->string('password');
             $table->string('telephone');
-            $table->string('etat')->default('actif');
+            $table->boolean('etat')->default(true);
             $table->string('username')->unique();
-            $table->integer('CNI');
+            $table->integer('CNI')->unique();
             $table->enum('sexe',['Masculin', 'Féminin']);
             $table->unsignedBigInteger('role_id');
             $table->foreign('role_id')->references('id')->on('roles');

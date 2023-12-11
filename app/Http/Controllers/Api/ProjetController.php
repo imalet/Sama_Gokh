@@ -6,8 +6,10 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Projet\AjouterProjetRequest;
 use App\Http\Requests\Projet\ModifierProjetRequest;
 use App\Http\Resources\ProjetResource;
+use App\Models\EtatProjet;
 use App\Models\Projet;
 use App\Models\Role;
+use App\Models\TypeProjet;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -37,23 +39,33 @@ class ProjetController extends Controller
         $newData = new Projet();
         $newData->titre = $request->titre;
         $newData->description = $request->description;
-        $newData->image = $request->image;
+        if($request->file('image')){
+            $file = $request->file('image');
+            $fileName = date('YmdHi').$file->getClientOriginalName();
+            $file-> move(public_path('public/images'), $fileName);
+            $newData['image'] = $fileName;
+        }
         $newData->couts = $request->couts;
         $newData->delai = $request->delai;
-        $newData->etat = $request->etat;
-        $userConnecte = auth()->user()->id;
-        $roleIdUserConnecte = User::find($userConnecte)->first()->role_id;
-
-        if (Role::where('id', $roleIdUserConnecte)->first()->id === $roleIdUserConnecte) {
+        $newData->user_id = auth()->user()->id;
+        // $newData->etat = $request->etat;
+        // $userConnecte = auth()->user()->id;
+        // dd($userConnecte);
+        $roleIdUserConnecte = auth()->user()->role_id;
+        // dd($roleIdUserConnecte);
+        if(Role::where('id',$roleIdUserConnecte)->get()->first()->id === $roleIdUserConnecte){
             // dd('ok');
-            if (Role::where('id', $roleIdUserConnecte)->first()->nom == "Citoyen") {
-                $newData->type_projet_id = 2;
-            } elseif (Role::where('id', $roleIdUserConnecte)->first()->nom == "AdminCommune") {
-                $newData->type_projet_id = 1;
+            if(Role::where('id',$roleIdUserConnecte)->get()->first()->nom == "Citoyen"){
+                // dd('ok');
+                $newData->type_projet_id = TypeProjet::where('nom', "Citoyen")->get()->first()->id;
+            }elseif(Role::where('id',$roleIdUserConnecte)->first()->nom == "AdminCommune"){
+                // dd('ok');
+                 $newData->type_projet_id = TypeProjet::where('nom', "Communal")->get()->first()->id;;
+               
             }
         }
         // $newData->type_projet_id = $request->type_projet_id;
-        $newData->etat_projet_id = true;
+         $newData->etat_projet_id = EtatProjet::where("statut", "En cours")->get()->first()->id;
 
         if ($newData->save()) {
             return response()->json(['message' => 'Insertion réussie'], 200);
@@ -86,19 +98,38 @@ class ProjetController extends Controller
     {
 
         $projet = Projet::findOrFail($id);
+        if(Role::where("nom", "AdminCommune")->get()->first()->id == auth()->user()->role_id && 
+        TypeProjet::where("id",$projet->type_projet_id)->get()->first()->nom == "Communal"){
+            // dd("Ok");
+            $projet->titre = $request->titre;
+            $projet->description = $request->description;
+            $projet->couts = $request->couts;
+            $projet->delai = $request->delai;
+            if ($projet->save()) {
+                    return response()->json('Modification du projet réussie', 200);
+            }
+            }elseif(Role::where("nom", "Citoyen")->get()->first()->id == auth()->user()->role_id && 
+            TypeProjet::where("id",$projet->type_projet_id)->get()->first()->nom == "Citoyen"){
+                // dd("Ok");
+                $projet->titre = $request->titre;
+                $projet->description = $request->description;
+                $projet->couts = $request->couts;
+                $projet->delai = $request->delai;
+                if ($projet->save()) {
+                        return response()->json('Modification du projet réussie', 200);
+                }
+            }else{
+            return response()->json('Vous ne pouvez pas modifier ce projet', 403);
+      }
+       
+        // $projet->image = $request->image;
+       
+        
+        // $projet->etat = $request->etat;
+        // $projet->type_projet_id = $request->type_projet_id;
+        // $projet->etat_projet_id = $request->etat_projet_id;
 
-        $projet->titre = $request->titre;
-        $projet->description = $request->description;
-        $projet->image = $request->image;
-        $projet->couts = $request->couts;
-        $projet->delai = $request->delai;
-        $projet->etat = $request->etat;
-        $projet->type_projet_id = $request->type_projet_id;
-        $projet->etat_projet_id = $request->etat_projet_id;
-
-        if ($projet->save()) {
-            return response('Update Ok', 200);
-        }
+        // 
 
         return response('BAD Update', 200);
     }
@@ -110,9 +141,20 @@ class ProjetController extends Controller
     {
 
         $projet = Projet::findOrFail($id);
-        $projet->etat = $etat;
-        $projet->save();
-
-        return response('Archiver OK', 200);
+        if(Role::where("nom", "AdminCommune")->get()->first()->id == auth()->user()->role_id && 
+        TypeProjet::where("id",$projet->type_projet_id)->get()->first()->nom == "Communal"){
+            $projet->etat = $etat;
+            $projet->save();
+            return response()->json('Projet archiver avec succès', 200);
+        }elseif(Role::where("nom", "Citoyen")->get()->first()->id == auth()->user()->role_id && 
+        TypeProjet::where("id",$projet->type_projet_id)->get()->first()->nom == "Citoyen"){
+            $projet->etat = $etat;
+            $projet->save();
+            return response()->json('Projet archiver avec succès', 200);
+        }
+        else{
+            return response()->json('Vous ne pouvez pas archiver ce projet', 403);
+        }
+        
     }
 }
