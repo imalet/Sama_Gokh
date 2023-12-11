@@ -105,6 +105,14 @@ class VilleController extends Controller
     /**
      * Display the specified resource.
      */
+
+      /**
+     * @OA\Get(
+     *     get="/api/ville/detail/{id}",
+     *     summary="Afficher les informations d'une ville précise",
+     *     @OA\Response(response="200", description=" Les information de la ville.")
+     * )   
+     */
     public function show(string $id)
     {
         $ville = Ville::findOrFail($id);
@@ -121,6 +129,14 @@ class VilleController extends Controller
 
     /**
      * Update the specified resource in storage.
+     */
+
+       /**
+     * @OA\Get(
+     *     get="/api/ville/update/{ville}",
+     *     summary="Modifie les informations d'une ville précise",
+     *     @OA\Response(response="200", description="Les information de la ville ont été modifiés.")
+     * )   
      */
 
     public function update(UpdateVilleRequest $request, Ville $ville)
