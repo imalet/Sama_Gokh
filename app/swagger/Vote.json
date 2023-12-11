@@ -1,0 +1,165 @@
+{
+    "openapi": "3.0.0",
+    "paths": {
+        "/vote/ajouter/{projet}": {
+            "post": {
+                "tags": [
+                    "Votes"
+                ],
+                "summary": "Enregistrer un nouveau vote pour un projet",
+                "operationId": "a80fb608789705b02b688dd7b0bd8847",
+                "parameters": [
+                    {
+                        "name": "projet",
+                        "in": "path",
+                        "description": "ID du projet pour lequel le vote est enregistré",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "scrutin"
+                                ],
+                                "properties": {
+                                    "scrutin": {
+                                        "type": "string",
+                                        "example": "Pour"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Votre vote a été enregistré",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "message": {
+                                                "type": "string",
+                                                "example": "Votre vote a été enregistré"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Vous avez déjà voté",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "message": {
+                                                "type": "string",
+                                                "example": "Vous avez déjà voté"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": []
+            }
+        },
+        "/vote/detail/{id}": {
+            "post": {
+                "tags": [
+                    "Votes"
+                ],
+                "summary": "Affichage des détails spécifiques ",
+                "operationId": "0b4b67868a80f0765c0254691b3a8f6f",
+                "parameters": [
+                    {
+                        "name": "projet",
+                        "in": "path",
+                        "description": "ID du projet pour lequel le vote est enregistré",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "scrutin"
+                                ],
+                                "properties": {
+                                    "scrutin": {
+                                        "type": "string",
+                                        "example": "Pour"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Votre vote a été enregistré",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "message": {
+                                                "type": "string",
+                                                "example": "Votre vote a été enregistré"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Vous avez déjà voté",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "message": {
+                                                "type": "string",
+                                                "example": "Vous avez déjà voté"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": []
+            }
+        }
+    }
+}

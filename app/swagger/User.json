@@ -1,0 +1,521 @@
+{
+    "openapi": "3.0.0",
+    "paths": {
+        "/register": {
+            "post": {
+                "tags": [
+                    "Utilisateurs"
+                ],
+                "summary": "Enregistrer un nouvel utilisateur",
+                "operationId": "7803685ce02ef1ad1d7b190a14c06284",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "nom",
+                                    "prenom",
+                                    "email",
+                                    "password",
+                                    "telephone",
+                                    "username",
+                                    "CNI",
+                                    "sexe",
+                                    "commune"
+                                ],
+                                "properties": {
+                                    "nom": {
+                                        "type": "string",
+                                        "example": "Doe"
+                                    },
+                                    "prenom": {
+                                        "type": "string",
+                                        "example": "John"
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email",
+                                        "example": "john.doe@example.com"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "format": "password",
+                                        "example": "secret"
+                                    },
+                                    "telephone": {
+                                        "type": "string",
+                                        "example": "123456789"
+                                    },
+                                    "username": {
+                                        "type": "string",
+                                        "example": "johndoe"
+                                    },
+                                    "CNI": {
+                                        "type": "string",
+                                        "example": "123456789"
+                                    },
+                                    "sexe": {
+                                        "type": "string",
+                                        "example": "Homme"
+                                    },
+                                    "commune": {
+                                        "type": "string",
+                                        "example": "Ngor"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Utilisateur enregistré",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "status_code": {
+                                                "type": "integer",
+                                                "example": 200
+                                            },
+                                            "status_message": {
+                                                "type": "string",
+                                                "example": "Utilisateur enregistré"
+                                            },
+                                            "user": {
+                                                "$ref": "#/components/schemas/User"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Erreur d'enregistrement de l'utilisateur",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "status_code": {
+                                                "type": "integer",
+                                                "example": 422
+                                            },
+                                            "status_message": {
+                                                "type": "string",
+                                                "example": "Erreur d'enregistrement de l'utilisateur"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": []
+            }
+        },
+        "/login": {
+            "post": {
+                "tags": [
+                    "Utilisateurs"
+                ],
+                "summary": "Connecter un utilisateur",
+                "operationId": "802efa828bed5cff912616a7ff48e617",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "username",
+                                    "password"
+                                ],
+                                "properties": {
+                                    "username": {
+                                        "type": "string",
+                                        "example": "johndoe"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "format": "password",
+                                        "example": "secret"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Utilisateur connecté",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "status_code": {
+                                                "type": "integer",
+                                                "example": 200
+                                            },
+                                            "status_message": {
+                                                "type": "string",
+                                                "example": "Utilisateur connecté"
+                                            },
+                                            "user": {
+                                                "$ref": "#/components/schemas/User"
+                                            },
+                                            "token": {
+                                                "type": "string",
+                                                "example": "Bearer {token}"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Informations non valides",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "status_code": {
+                                                "type": "integer",
+                                                "example": 403
+                                            },
+                                            "status_message": {
+                                                "type": "string",
+                                                "example": "Informations non valides"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": []
+            }
+        },
+        "/logout": {
+            "post": {
+                "tags": [
+                    "Utilisateurs"
+                ],
+                "summary": "Déconnecter un utilisateur",
+                "operationId": "716ee9fdd4df72c5cb7cd983a3a5c2ef",
+                "responses": {
+                    "200": {
+                        "description": "Utilisateur déconnecté avec succès",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "status_code": {
+                                                "type": "integer",
+                                                "example": 200
+                                            },
+                                            "status_message": {
+                                                "type": "string",
+                                                "example": "Utilisateur déconnecté avec succès"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/edit/citizen/{user}": {
+            "put": {
+                "tags": [
+                    "Utilisateurs"
+                ],
+                "summary": "Modifier le compte utilisateur citoyen",
+                "operationId": "8ab18db0c447c6f9e2af025d26300bd6",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "nom",
+                                    "prenom",
+                                    "email",
+                                    "telephone",
+                                    "username",
+                                    "CNI",
+                                    "sexe"
+                                ],
+                                "properties": {
+                                    "nom": {
+                                        "type": "string",
+                                        "example": "Doe"
+                                    },
+                                    "prenom": {
+                                        "type": "string",
+                                        "example": "John"
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email",
+                                        "example": "john.doe@example.com"
+                                    },
+                                    "telephone": {
+                                        "type": "string",
+                                        "example": "123456789"
+                                    },
+                                    "username": {
+                                        "type": "string",
+                                        "example": "johndoe"
+                                    },
+                                    "CNI": {
+                                        "type": "string",
+                                        "example": "123456789"
+                                    },
+                                    "sexe": {
+                                        "type": "string",
+                                        "example": "Homme"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Modification du compte enregistré",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "status_code": {
+                                                "type": "integer",
+                                                "example": 200
+                                            },
+                                            "status_message": {
+                                                "type": "string",
+                                                "example": "Modification du compte enregistré"
+                                            },
+                                            "user": {
+                                                "$ref": "#/components/schemas/User"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Vous ne pouvez pas modifier ce compte",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "status_code": {
+                                                "type": "integer",
+                                                "example": 422
+                                            },
+                                            "status_message": {
+                                                "type": "string",
+                                                "example": "Vous ne pouvez pas modifier ce compte"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/archive/citizen/{user}": {
+            "put": {
+                "tags": [
+                    "Utilisateurs"
+                ],
+                "summary": "Désactiver le compte utilisateur",
+                "operationId": "6c312de1b98090a10373756fb9e569fa",
+                "responses": {
+                    "200": {
+                        "description": "La désactivation du compte est réussie",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "status_code": {
+                                                "type": "integer",
+                                                "example": 200
+                                            },
+                                            "status_message": {
+                                                "type": "string",
+                                                "example": "La désactivation du compte est réussie"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Vous ne pouvez pas désactiver ce compte",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "status_code": {
+                                                "type": "integer",
+                                                "example": 422
+                                            },
+                                            "status_message": {
+                                                "type": "string",
+                                                "example": "Vous ne pouvez pas désactiver ce compte"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/reset/password": {
+            "post": {
+                "tags": [
+                    "Utilisateurs"
+                ],
+                "summary": "Réinitialiser le mot de passe",
+                "operationId": "264f75e51269d24398878c315b4073d9",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "telephone",
+                                    "email",
+                                    "password"
+                                ],
+                                "properties": {
+                                    "telephone": {
+                                        "type": "string",
+                                        "example": "123456789"
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email",
+                                        "example": "john.doe@example.com"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "format": "password",
+                                        "example": "newpassword"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Le mot de passe du compte a été réinitialisé",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "status_code": {
+                                                "type": "integer",
+                                                "example": 200
+                                            },
+                                            "status_message": {
+                                                "type": "string",
+                                                "example": "Le mot de passe du compte a été réinitialisé"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Identifiants invalides",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "status_code": {
+                                                "type": "integer",
+                                                "example": 403
+                                            },
+                                            "status_message": {
+                                                "type": "string",
+                                                "example": "Identifiants invalides"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

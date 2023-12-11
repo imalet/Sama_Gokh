@@ -1,0 +1,251 @@
+{
+    "openapi": "3.0.0",
+    "paths": {
+        "/liste/type/projet": {
+            "get": {
+                "tags": [
+                    "Types de Projets"
+                ],
+                "summary": "Récupérer tous les types de projets",
+                "operationId": "292e5809debbcf9e971494bf45c44867",
+                "responses": {
+                    "200": {
+                        "description": "Liste de tous les types de projets",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/TypeProjet"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/type/projet/ajouter": {
+            "post": {
+                "tags": [
+                    "Types de Projets"
+                ],
+                "summary": "Ajouter un nouveau type de projet",
+                "operationId": "5a8b55abd5589ccb99c5d3b319e2c60c",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "nom"
+                                ],
+                                "properties": {
+                                    "nom": {
+                                        "type": "string",
+                                        "example": "Nouveau Type Projet"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Ajout du type de projet réussi",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "Message": {
+                                                "type": "string",
+                                                "example": "Ajout du Type Projet Reussi"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Ajout du type de projet échoué",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "Message": {
+                                                "type": "string",
+                                                "example": "Ajout du Type Projet Echoué"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/type/projet/modifier/{type_projet_id}": {
+            "put": {
+                "tags": [
+                    "Types de Projets"
+                ],
+                "summary": "Modifier un type de projet existant",
+                "operationId": "b5f98c3604f876cf0556e9d298473394",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID du type de projet à modifier",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "nom"
+                                ],
+                                "properties": {
+                                    "nom": {
+                                        "type": "string",
+                                        "example": "Nouveau Nom du Type Projet"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Modification du type de projet réussie",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "Message": {
+                                                "type": "string",
+                                                "example": "Modification du Type Projet Reussi"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Modification du type de projet échouée",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "Message": {
+                                                "type": "string",
+                                                "example": "Modification du Type Projet Echoué"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/type/projet/supprimer/{type_projet_id}": {
+            "delete": {
+                "tags": [
+                    "Types de Projets"
+                ],
+                "summary": "Supprimer un type de projet existant",
+                "operationId": "c5baa94da0d871aeb0387a21a7b5488b",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID du type de projet à supprimer",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Suppression du type de projet réussie",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "Message": {
+                                                "type": "string",
+                                                "example": "Suppression Type Projet OK"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Type de projet non trouvé",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "Message": {
+                                                "type": "string",
+                                                "example": "Type de projet non trouvé"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        }
+    }
+}
