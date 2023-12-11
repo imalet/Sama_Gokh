@@ -1,0 +1,54 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "endpointadmincommune",
+        "version": "0.1"
+    },
+    "paths": {
+        "/api/admin_commune/lister": {
+            "get": {
+                "summary": "Récupérer la liste des administrateurs de commune",
+                "description": "Cette API renvoie la liste de tous les administrateurs de commune enregistrés dans la base de données.",
+                "operationId": "29c24d751d75549f63500b5aff37e243",
+                "responses": {
+                    "200": {
+                        "description": "Liste des admincommunes"
+                    }
+                }
+            }
+        },
+        "admin_commune/create": {
+            "post": {
+                "summary": "ajouter les admincommunes dans la base de données",
+                "operationId": "95983d8772d17fa7c0a7f04139f2a6b0",
+                "responses": {
+                    "200": {
+                        "description": "l'inscription des admincommunes"
+                    }
+                }
+            }
+        },
+        "admin_commune/edit/{id}": {
+            "put": {
+                "summary": "modifier les admincommunes insérés",
+                "operationId": "36283a145d3a90096fb37b55f4189dda",
+                "responses": {
+                    "200": {
+                        "description": "la modification des admincommunes"
+                    }
+                }
+            }
+        },
+        "admin_commune/archive/{id}": {
+            "put": {
+                "summary": "archiver les admincommunes insérés",
+                "operationId": "52460df4ee12a843a516ee249cdc298b",
+                "responses": {
+                    "200": {
+                        "description": " l'archivage d'admincommune"
+                    }
+                }
+            }
+        }
+    }
+}

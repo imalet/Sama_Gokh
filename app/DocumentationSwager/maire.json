@@ -1,0 +1,300 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "endpointmaire",
+        "version": "0.1"
+    },
+    "paths": {
+        "/api/maire/lister": {
+            "get": {
+                "tags": [
+                    "Maire"
+                ],
+                "summary": "Récupérer la liste des maires",
+                "description": "Cette API renvoie la liste de tous les maires enregistrés dans la base de données.",
+                "operationId": "cdd371526d9cacaa68071d2bf5f542b4",
+                "responses": {
+                    "200": {
+                        "description": "Succès. La liste des maires a été récupérée avec succès.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status_code": {
+                                            "type": "integer",
+                                            "example": 200
+                                        },
+                                        "status_message": {
+                                            "type": "string",
+                                            "example": "maire a été récupéré"
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/User"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Erreur interne du serveur. En cas d'échec lors de la récupération des maires.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Internal Server Error"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/maire/create": {
+            "post": {
+                "tags": [
+                    "Maire"
+                ],
+                "summary": "Ajouter un maire dans la base de données",
+                "operationId": "7e6180173f8c64ef8f85c283dd26645d",
+                "requestBody": {
+                    "description": "Données du maire à ajouter",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "nom": {
+                                        "type": "string",
+                                        "example": "Nom du maire"
+                                    },
+                                    "prenom": {
+                                        "type": "string",
+                                        "example": "Prénom du maire"
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email",
+                                        "example": "exemple@domaine.com"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "example": "MotDePasse123"
+                                    },
+                                    "telephone": {
+                                        "type": "string",
+                                        "example": "0123456789"
+                                    },
+                                    "username": {
+                                        "type": "string",
+                                        "example": "NomUtilisateur"
+                                    },
+                                    "CNI": {
+                                        "type": "string",
+                                        "example": "1234567890"
+                                    },
+                                    "sexe": {
+                                        "type": "string",
+                                        "enum": [
+                                            "Masculin",
+                                            "Féminin"
+                                        ],
+                                        "example": "Masculin"
+                                    },
+                                    "commune": {
+                                        "type": "string",
+                                        "example": "Nom de la commune"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Succès. Le maire a été ajouté avec succès.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status_code": {
+                                            "type": "integer",
+                                            "example": 200
+                                        },
+                                        "status_message": {
+                                            "type": "string",
+                                            "example": "Maire a été ajouté"
+                                        },
+                                        "data": {
+                                            "$ref": "#/components/schemas/User"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Erreur interne du serveur. En cas d'échec lors de l'ajout du maire.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Internal Server Error"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/maire/edit/{id}": {
+            "put": {
+                "tags": [
+                    "Maire"
+                ],
+                "summary": "Modifier le profil d'un maire",
+                "operationId": "06062fa6e1cb794524ea8e4715b1b7c0",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID du maire à modifier",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "Données du maire à mettre à jour",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/EditMaireRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Succès. Le profil du maire a été modifié avec succès.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status_code": {
+                                            "type": "integer",
+                                            "example": 200
+                                        },
+                                        "status_message": {
+                                            "type": "string",
+                                            "example": "Le profil du Maire a été modifié"
+                                        },
+                                        "data": {
+                                            "$ref": "#/components/schemas/User"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Erreur interne du serveur. En cas d'échec lors de la modification du profil du maire.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Internal Server Error"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/maire/archive/{id}": {
+            "put": {
+                "tags": [
+                    "Maire"
+                ],
+                "summary": "Archiver un maire",
+                "operationId": "9cd174651b6c41cbbf2ece2ff18fa7ed",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID du maire à archiver",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Succès. Le maire a été archivé avec succès.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status_code": {
+                                            "type": "integer",
+                                            "example": 200
+                                        },
+                                        "status_message": {
+                                            "type": "string",
+                                            "example": "Maire a été archivé"
+                                        },
+                                        "data": {
+                                            "$ref": "#/components/schemas/User"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Erreur interne du serveur. En cas d'échec lors de l'archivage du maire.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Internal Server Error"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
