@@ -75,7 +75,19 @@ class CommuneController extends Controller
             $commune->nombreCitoyen = $request->nombreCitoyen;
             $villes = [
                 "Dakar"=>["Yoff", "Ngor"],
+                "Diourbel"=>["Bambey"],
+                "Fatick"=>["Diofior", "Diakhao"],
+                "Kaffrine"=>["Diamagadio"],
+                "Kaolack"=>["Kahone"],
+                "Kédougou"=>["Fongolembi"],
+                "Kolda"=>["Dinguiraye"],
+                "Louga"=>["Coki"],
+                "Matam"=>["Thilogne"],
+                "Saint-Louis"=>["Richard Toll"],
+                "Sedhiou"=>["Bambali"],
+                "Tambacounda"=>["Missirah"],
                 "Thiès"=>["Mbour", "Thiès Nord"],
+                "Ziguinchor"=>["Niaguis"]
             ];
             foreach($villes as $key=>$ville){
                 if(in_array($request->nom, $ville)){
@@ -131,7 +143,27 @@ class CommuneController extends Controller
                 $commune['image'] = $filename;
             }
             $commune->nombreCitoyen = $request->nombreCitoyen;
-            $commune->ville_id = $request->ville_id;
+            $villes = [
+                "Dakar"=>["Yoff", "Ngor"],
+                "Diourbel"=>["Bambey"],
+                "Fatick"=>["Diofior", "Diakhao"],
+                "Kaffrine"=>["Diamagadio"],
+                "Kaolack"=>["Kahone"],
+                "Kédougou"=>["Fongolembi"],
+                "Kolda"=>["Dinguiraye"],
+                "Louga"=>["Coki"],
+                "Matam"=>["Thilogne"],
+                "Saint-Louis"=>["Richard Toll"],
+                "Sedhiou"=>["Bambali"],
+                "Tambacounda"=>["Missirah"],
+                "Thiès"=>["Mbour", "Thiès Nord"],
+                "Ziguinchor"=>["Niaguis"]
+            ];
+            foreach($villes as $key=>$ville){
+                if(in_array($request->nom, $ville)){
+                    $commune->ville_id = Ville::where("nom", $key)->get()->first()->id;
+                }
+            }
             //  dd($commune);
             $commune->save();
 

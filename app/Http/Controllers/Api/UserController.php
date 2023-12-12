@@ -67,22 +67,41 @@ class UserController extends Controller
     public function register(UserRegisterRequest $request){
         
         try{
+            // dd("ok");
             $user = new User();
-             $idCitoyen = Role::where("nom", "Citoyen")->get()->first()->id;
+            $idCitoyen = Role::where("nom", "Citoyen")->get()->first()->id;
+            //  $idSuperAdmin = Role::where("nom", "SuperAdmin")->get()->first()->id;
+            //  if($idSuperAdmin){
+            //     $user->role_id = $idSuperAdmin;
+            //  }else{
+            //     $user->role_id = $idCitoyen;
+            //  }
             $user->role_id = $idCitoyen;
             $user->nom = $request->nom;
             $user->prenom = $request->prenom;
             $user->email = $request->email;
             $user->password = Hash::make($request->password, [
                 'rounds' =>12
-            ]) ;;
+            ]);
             $user->telephone = $request->telephone;
             $user->username = $request->username;
             $user->CNI = $request->CNI;
             $user->sexe = $request->sexe;
             $villes = [
                 "Dakar"=>["Yoff", "Ngor"],
+                "Diourbel"=>["Bambey"],
+                "Fatick"=>["Diofior", "Diakhao"],
+                "Kaffrine"=>["Diamagadio"],
+                "Kaolack"=>["Kahone"],
+                "Kédougou"=>["Fongolembi"],
+                "Kolda"=>["Dinguiraye"],
+                "Louga"=>["Coki"],
+                "Matam"=>["Thilogne"],
+                "Saint-Louis"=>["Richard Toll"],
+                "Sedhiou"=>["Bambali"],
+                "Tambacounda"=>["Missirah"],
                 "Thiès"=>["Mbour", "Thiès Nord"],
+                "Ziguinchor"=>["Niaguis"]
             ];
             foreach($villes as $key=>$ville){
 
@@ -90,7 +109,7 @@ class UserController extends Controller
                      $user->commune_id = Ville::where("nom",$key)->get()->first()->id;
                  }
             }
-           
+        //    dd($user);
             
             $user->save();
             

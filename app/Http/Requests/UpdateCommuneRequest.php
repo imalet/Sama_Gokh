@@ -25,7 +25,7 @@ class UpdateCommuneRequest extends FormRequest
             'nom' => 'required|max:50',
             'nombreCitoyen' => 'required|integer',
             'image' => 'sometimes|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'ville_id' => 'required|exists:villes,id',
+            'ville_id' => 'exists:villes,id',
         ];
     }
 
