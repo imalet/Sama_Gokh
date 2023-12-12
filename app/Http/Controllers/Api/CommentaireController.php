@@ -99,6 +99,13 @@ class CommentaireController extends Controller
         $newData->annonce_id = $id;
         $newData->contenu = $request->contenu;
         $newData->user_id = auth()->user()->id;
+    }
+    public function store(AjouterCommentaireRequest $request)
+    {
+        $newData = new Commentaire();
+        $newData->annonce_id = $request->annonce_id;
+        $newData->contenu = $request->contenu;
+        $newData->user_id = Auth::user()->id;
         // $newData->user_id = $request->user_id;
 
         if ($newData->save()) {
@@ -232,10 +239,17 @@ class CommentaireController extends Controller
         }else{
             return response()->json('Vous ne pouvez pas modifier ce commentaire', 403);
         }
-        
+    }
 
         // 
         
+    public function update(ModifierCommentaireRequest $request, string $id)
+    {
+        $commentaire = Commentaire::findOrFail($id);
+        $commentaire->contenu = $request->contenu;
+
+        $commentaire->save();
+        return response('update Commentaire OK', 200);
     }
 
     /**
@@ -300,6 +314,15 @@ class CommentaireController extends Controller
     
             return response()->json('Archiver Commentaire OK', 200);
         }
-       
     }
+       
+    // public function archiver(string $id, string $etat)
+    // {
+        
+    //     $commentaire = Commentaire::findOrFail($id);
+    //     $commentaire->etat = $etat;
+    //     $commentaire->save();
+
+    //     return response('Archiver Commentaire OK', 200);
+    // }
 }

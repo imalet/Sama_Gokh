@@ -29,6 +29,9 @@ class AjouterAnnonceRequest extends FormRequest
             'image' => 'required',
             'description' => 'required|string',
             // 'etat' => ['required', 'boolean'],
+            'image' => 'required|string',
+            'description' => 'required|string',
+            'etat' => ['required', 'boolean'],
         ];
     }
 

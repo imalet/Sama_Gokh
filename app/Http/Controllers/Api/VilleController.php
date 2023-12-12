@@ -84,6 +84,8 @@ class VilleController extends Controller
     public function show(string $id)
     {
         //
+        $ville = Ville::findOrFail($id);
+        return $ville;
     }
 
     /**

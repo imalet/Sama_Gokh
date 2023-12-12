@@ -19,6 +19,9 @@ return new class extends Migration
             $table->enum('scrutin',['pour', 'contre']);
             $table->foreignIdFor(Projet::class)->constrained()->cascadeOnDelete();
             // $table->date('date_de_cloture');
+            $table->enum('statut',['pour', 'contre']);
+            $table->foreignIdFor(Projet::class)->constrained()->cascadeOnDelete();
+            $table->date('date_de_cloture');
             $table->timestamps();
         });
     }

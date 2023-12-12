@@ -32,6 +32,9 @@ class EditAdmincommuneRequest extends FormRequest
             // 'etat' => 'required',
             'username' => 'required',
             // 'CNI' => 'required|numeric',
+            'etat' => 'required',
+            'username' => 'required',
+            'CNI' => 'required|numeric',
            
         ];
     }

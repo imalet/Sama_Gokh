@@ -26,7 +26,10 @@ class ModifierCommentaireRequest extends FormRequest
         return [
             'annonce_id' => 'exists:annonces,id',
             'contenu' => 'required|string',
-            'user_id' => 'exists:users,id'
+            'user_id' => 'exists:users,id',
+            'annonce_id' => 'required|exists:annonces,id',
+            'contenu' => 'required|string',
+            'user_id' => 'required|exists:users,id'
         ];
     }
 

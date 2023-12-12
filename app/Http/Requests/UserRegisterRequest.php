@@ -31,6 +31,8 @@ class UserRegisterRequest extends FormRequest
             'telephone'=> ['required', 'regex:/^\+221(77|78|76|70)\d{7}$/'],
             'username' => 'required|max:255|unique:users,username',
             'CNI' => 'required|numeric|unique:users,CNI',
+            'username' => 'required|max:255',
+            'CNI' => 'required|numeric',
              'sexe' => 'required'
 
         ];
@@ -49,6 +51,9 @@ class UserRegisterRequest extends FormRequest
             'username.unique' => "Ce nom d'utilisateur existe déjà",
             'CNI.required' => "Le CNI  est requis",
             'CNI.unique' => "Ce CNI existe déjà",
+            // 'username.unique' => "Ce nom d'utilisateur existe déjà",
+            'CNI.required' => "Le CNI  est requis",
+            // 'CNI.unique' => "Ce CNI existe déjà",
             'sexe.required' => "veuillez renseigner votre sexe"
         ];
     }

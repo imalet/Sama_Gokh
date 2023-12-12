@@ -104,6 +104,11 @@ class TypeProjetController extends Controller
     //     $type_projet = TypeProjet::findOrFail($id);
     //     return $type_projet;
     // }
+    public function show(string $id)
+    {
+        $type_projet = TypeProjet::findOrFail($id);
+        return $type_projet;
+    }
 
     /**
      * Show the form for editing the specified resource.

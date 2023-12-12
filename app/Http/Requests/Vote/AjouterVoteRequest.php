@@ -29,6 +29,10 @@ class AjouterVoteRequest extends FormRequest
             'scrutin' => ['required', 'regex:/^(pour|contre)$/i'],
             'projet_id' => 'exists:projets,id',
             // 'date_de_cloture' => 'required|date',
+            'user_id' => 'required|exists:users,id',
+            'statut' => ['required', 'regex:/^(pour|contre)$/i'],
+            'projet_id' => 'required|exists:projets,id',
+            'date_de_cloture' => 'required|date',
         ];
     }
 

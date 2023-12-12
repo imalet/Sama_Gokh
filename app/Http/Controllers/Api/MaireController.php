@@ -47,6 +47,12 @@ class MaireController extends Controller
       $communeId = Commune::where("nom", $request->commune)->get()->first()->id;
     
       $maire->commune_id = $communeId;
+      $maire->etat = $request->etat;
+      $maire->username = $request->username;
+      $maire->CNI = $request->CNI;
+      $maire->sexe = $request->sexe;
+      $maire->role_id = $request->role_id;
+      $maire->commune_id = $request->commune_id;
       $maire->save();
 
       return response()->json([
@@ -87,6 +93,24 @@ class MaireController extends Controller
       
 
      
+      $maire->nom = $request->nom;
+      $maire->prenom = $request->prenom;
+      $maire->email = $request->email;
+      $maire->password = $request->password;
+      $maire->telephone = $request->telephone;
+      $maire->etat = $request->etat;
+      $maire->username = $request->username;
+      $maire->CNI = $request->CNI;
+      $maire->sexe = $request->sexe;
+      $maire->role_id = $request->role_id;
+      $maire->commune_id = $request->commune_id;
+      $maire->save();
+
+      return response()->json([
+        'status_code' => 200,
+        'status_message' => 'Miare a été modifié',
+        'data' => $maire
+      ]);
     } catch (Exception $e) {
       return response()->json($e);
     }
@@ -112,6 +136,14 @@ class MaireController extends Controller
         ]);
       }
       
+      $maire->etat = 'inactif';
+      $maire->save();
+
+      return response()->json([
+        'status_code' => 200,
+        'status_message' => 'Maire a été archivé',
+        'data' => $maire
+      ]);
     } catch (Exception $e) {
       return response()->json($e);
     }

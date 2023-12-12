@@ -9,6 +9,12 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateCommuneRequest;
 use App\Http\Requests\UpdateCommuneRequest;
+// use App\Http\Controllers\Controller;
+// use App\Http\Requests\CreateCommuneRequest;
+// use App\Http\Requests\UpdateCommuneRequest;
+// use App\Models\Commune;
+// use Exception;
+// use Illuminate\Http\Request;
 
 class CommuneController extends Controller
 {
@@ -83,6 +89,7 @@ class CommuneController extends Controller
                 }
             }
              
+            $commune->ville_id = $request->ville_id;
 
             $commune->save();
 
@@ -103,6 +110,8 @@ class CommuneController extends Controller
     public function show(string $id)
     {
         //
+        $commune = Commune::findOrFail($id);
+        return $commune;
     }
 
     /**

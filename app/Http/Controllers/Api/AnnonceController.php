@@ -13,6 +13,11 @@ use openApi\Annotations as OA;
 /**
  * @OA\Info(title="endpoint des annonces", version="0.1")
  */
+// use App\Http\Controllers\Controller;
+// use App\Http\Requests\Annonce\AjouterAnnonceRequest;
+// use App\Http\Requests\Annonce\ModifierAnnonceRequest;
+// use App\Models\Annonce;
+// use Illuminate\Http\Request;
 
 class AnnonceController extends Controller
 {
@@ -76,10 +81,17 @@ class AnnonceController extends Controller
 
         if ($newData->save()) {
             return response()->json(['message'=>'Annonce inséré avec succès'],200);
+        $newData->image = $request->image;
+        $newData->description = $request->description;
+        $newData->etat = $request->etat;
+        $newData->user_id = 1;
+
+        if ($newData->save()) {
+            return response()->json(['message'=>'Insertion Reussi'],200);
         }
 
         return response()->json(['message'=>'Échec de l\'insertion'],422);
-    }
+    }}
 
     /**
      * Display the specified resource.
@@ -122,9 +134,24 @@ class AnnonceController extends Controller
                 }
         }else{
             return response()->json(["message"=>"Vous ne pouvez pas modifier cette annonce", 200]);
-        } 
-        return response()->json(['message'=>"Erreur d'Insertion"],422);
+        }
     }
+
+    // public function update(ModifierAnnonceRequest $request, string $id)
+    // {
+    //     $annonce = Annonce::findOrFail($id);
+
+    //     $annonce->titre = $request->titre;
+    //     $annonce->image = $request->image;
+    //     $annonce->description = $request->description;
+    //     $annonce->etat = $request->etat;
+
+    //     if ($annonce->save()) {
+    //         return response()->json(["message"=>"Annonce modifié Avec Success", 200]);
+    //     }
+
+    //     return response()->json(['message'=>"Erreur d'Insertion"],422);
+    // }
 
     /**
      * Archieve the specified resource from storage.
@@ -149,8 +176,17 @@ class AnnonceController extends Controller
         }else{
             return response()->json('Vous ne pouvez pas archivé cette annonce', 403);
         }
-       
     }
+       
+    // public function archiver(string $id, string $etat)
+    // {
+        
+    //     $projet = Annonce::findOrFail($id);
+    //     $projet->etat = $etat;
+    //     $projet->save();
+
+    //     return response('Archiver Annonce OK', 200);
+    // }
 
     /**
      * Remove the specified resource from storage.

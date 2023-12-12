@@ -29,6 +29,7 @@ class CreateAdmincommuneRequest extends FormRequest
             'password' => 'required|min:8',
             'telephone' => ['required', 'regex:/^\+221(77|78|76|70)\d{7}$/'], 
             // 'etat' => 'required',
+            'etat' => 'required',
             'username' => 'required',
             'CNI' => 'required|numeric',
     

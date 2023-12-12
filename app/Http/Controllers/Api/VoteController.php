@@ -9,6 +9,12 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\Vote\AjouterVoteRequest;
 use App\Http\Requests\Vote\ModifierVoteRequest;
+// use App\Http\Controllers\Controller;
+// use App\Http\Requests\Vote\AjouterVoteRequest;
+// use App\Http\Requests\Vote\ModifierVoteRequest;
+// use App\Models\Vote;
+// use Illuminate\Http\Request;
+// use Illuminate\Support\Facades\Auth;
 
 class VoteController extends Controller
 {
@@ -86,8 +92,21 @@ class VoteController extends Controller
        }else{
         return response()->json(['message'=>'Vous avez déjà voté']);
        }
-
     }
+    // public function store(AjouterVoteRequest $request)
+    // {
+    //     $newData = new Vote();
+    //     $newData->user_id = auth()->user()->id;
+    //     $newData->statut = $request->statut;
+    //     $newData->projet_id = $request->projet_id;
+    //     $newData->date_de_cloture = $request->date_de_cloture;
+
+    //     if ($newData->save()) {
+    //         return response()->json(["Message"=>"Insertion d'un vote Reussi"],200);
+    //     }
+    //     return response()->json(["Message"=>"Insertion d'un vote Echoué"],422);
+
+    // }
 
     /**
      * Display the specified resource.
@@ -168,6 +187,19 @@ class VoteController extends Controller
     //     }
     //     return response()->json(["Message"=>"Modification d'un vote Echoué"],422);
     // }
+    public function update(ModifierVoteRequest $request, string $id)
+    {
+        $vote = Vote::findOrFail($id);
+        $vote->user_id = $request->user_id;
+        $vote->statut = $request->statut;
+        $vote->projet_id = $request->projet_id;
+        $vote->date_de_cloture = $request->date_de_cloture;
+
+        if ($vote->save()) {
+            return response()->json(["Message"=>"Modification d'un vote Reussi"],200);
+        }
+        return response()->json(["Message"=>"Modification d'un vote Echoué"],422);
+    }
 
     /**
      * Remove the specified resource from storage.
@@ -180,4 +212,12 @@ class VoteController extends Controller
     //     return response('Supression Vote OK', 200);
 
     // }
+    public function destroy(string $id)
+    {
+        $vote = Vote::findOrFail($id);
+        $vote->delete();
+
+        return response('Supression Vote OK', 200);
+
+    }
 }

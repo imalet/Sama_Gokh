@@ -48,6 +48,13 @@ Route::middleware(['auth:sanctum', 'role:SuperAdmin'])->group(function () {
     Route::get('roles', [RoleController::class, 'index']);
     // Ajouter un role dans la base de données 
     Route::post('/role/store', [RoleController::class, 'store'])->name("role.add");
+
+    // Ajouter un role dans la base de données 
+    Route::post('/role/store', [RoleController::class, 'store'])->name("role.add");
+
+    // Afficher les details d'une role unique
+    Route::get('role/detail/{id}', [RoleController::class, 'show'])->name('role.detail');
+
     // Modifier un role 
     Route::put('/role/update/{role}', [RoleController::class, 'update'])->name("role.update");
 
@@ -62,6 +69,13 @@ Route::middleware(['auth:sanctum', 'role:SuperAdmin'])->group(function () {
     Route::get('villes', [VilleController::class, 'index']);
     // Ajouter une ville dans la base de données 
     Route::post('/ville/store', [VilleController::class, 'store'])->name("ville.add");
+
+    // Ajouter une ville dans la base de données 
+    Route::post('/ville/store', [VilleController::class, 'store'])->name("ville.add");
+
+    // Afficher les details d'une ville unique
+    Route::get('ville/detail/{id}', [VilleController::class, 'show'])->name('ville.detail');
+
     // Modifier une ville 
     Route::put('/ville/update/{ville}', [VilleController::class, 'update'])->name("ville.update");
 
@@ -78,6 +92,19 @@ Route::middleware(['auth:sanctum', 'role:SuperAdmin'])->group(function () {
     Route::post('/commune/store', [CommuneController::class, 'store'])->name("commune.add");
     // Modifier une commune 
     Route::put('/commune/update/{commune}', [CommuneController::class, 'update'])->name("commune.update");
+    // ----------------------------------------COMMUNE------------------------------------------------
+    // Afficher Liste communes 
+    Route::get('communes', [CommuneController::class, 'index']);
+
+    // Ajouter une commune dans la base de données 
+    Route::post('/commune/store', [CommuneController::class, 'store'])->name("commune.add");
+
+    // Afficher les details d'une commune unique
+    Route::get('commune/detail/{id}', [CommuneController::class, 'show'])->name('commune.detail');
+
+    // Modifier une commune 
+    Route::put('/commune/update/{commune}', [CommuneController::class, 'update'])->name("commune.update");
+
     // Test Ajouter User
     Route::post('/user/store', [UserController::class, 'store']);
 
@@ -129,6 +156,18 @@ Route::middleware(['auth:sanctum', 'role:SuperAdmin'])->group(function () {
         $maire = User::all();
         return MaireResource::collection($maire);
     });
+
+    // -----------------------------------ACTION PROFIL SUPER ADMIN----------------------------------------
+
+    //Afficher toutes les details de profils du compte du Super Admin
+    Route::get('/superadmin/afficher/{id}', [UserController::class, 'show']);
+
+    //Modifier les informations de profils du  compte du Super Admin
+    Route::put('/superadmin/update/{user}', [UserController::class, 'update']);
+
+    //Archiver les informations un compte Super Admin
+     Route::put('/archive/superadmin/{user}', [UserController::class, 'archive']);
+
 });
 
 // ---------------------------------LES ACTIONS DU CITOYEN-------------------------------
@@ -153,6 +192,21 @@ Route::middleware(['auth:sanctum', 'role:Citoyen'])->group(function () {
 
     // AJouter des Votes
     Route::post('/vote/ajouter/{projet}', [VoteController::class, 'store'])->name('vote.ajouter');
+    Route::patch('/commentaire/archiver/{commentaire_id}/{etat}', [CommentaireController::class, 'archiver'])->name('commentaires.archiver');
+
+    // AJouter des Votes
+    Route::post('/vote/ajouter', [VoteController::class, 'store'])->name('vote.ajouter');
+
+    // ----------------------------------------ACTION PROFIL DU CITOYEN -----------------------------------------------
+
+    //Afficher toutes les details de profils du compte du citoyen
+    Route::get('/citizen/afficher/{id}', [UserController::class, 'show']);
+
+    //Modifier les informations de profils du  compte du citoyen
+    Route::put('/edit/citizen/{user}', [UserController::class, 'update']);
+
+    //Archiver les informations un compte citoyen
+    Route::put('/archive/citizen/{user}', [UserController::class, 'archive']);
 });
 
 // ---------------------------------LES ACTIONS DU MAIRE-------------------------------
@@ -163,6 +217,10 @@ Route::middleware(['auth:sanctum', 'role:Maire'])->group(function () {
 
     //Pour achiver admin_commune
     Route::put('admin_commune/archive/{id}', [AdmincommuneController::class, 'archiver']);
+    //Pour achiver admin_commune
+    Route::put('admin_commune/archive/{id}', [AdmincommuneController::class, 'archiver']);
+    //Afficher toutes les details de profils du compte du maire
+    Route::get('/admin_commune/afficher/{id}', [UserController::class, 'show']);
     //pour modifier admin_commune
     Route::put('admin_commune/edit/{id}', [AdmincommuneController::class, 'update']);
     //ajouter admin_commune
@@ -175,6 +233,17 @@ Route::middleware(['auth:sanctum', 'role:Maire'])->group(function () {
         $admincommune = User::all();
         return AdmincommuneResource::collection($admincommune);
     });
+
+    // ----------------------------------------ACTION PROFIL DU MAIRE -----------------------------------------------
+
+    //Afficher toutes les details de profils du compte du maire
+    Route::get('/maire/afficher/{id}', [UserController::class, 'show']);
+
+    //Modifier les informations de profils du  compte du maire
+    Route::put('/edit/maire/{user}', [UserController::class, 'update']);
+
+    //Archiver les informations un compte maire
+    Route::put('/archive/maire/{user}', [UserController::class, 'archive']);
 });
 
 //-----------------------------LES ACTIONS DE L'ADMIN COMMUNE---------------------------
@@ -189,6 +258,10 @@ Route::middleware(['auth:sanctum', 'role:AdminCommune'])->group(function () {
     Route::patch('/annonce/modifier/{annonce_id}', [AnnonceController::class, 'update'])->name('annonce.modifier');
     // Archiver des donnees Projet
     Route::patch('/annonce/archiver/etat/{annonce_id}', [AnnonceController::class, 'archiver'])->name('annonce.archiver');
+    // Modifier des donnees Annonce
+    Route::patch('/annonce/modifier/{annonce_id}', [AnnonceController::class, 'update'])->name('annonce.modifier');
+    // Archiver des donnees Annonce
+    Route::patch('/annonce/archiver/etat/{annonce_id}/{etat}', [AnnonceController::class, 'archiver'])->name('annonce.archiver');
 
 
     // Liste des Votes
@@ -200,6 +273,18 @@ Route::middleware(['auth:sanctum', 'role:AdminCommune'])->group(function () {
     Route::patch('/vote/modification/{vote_id}', [VoteController::class, 'update'])->name('vote.modifier');
     // Supprimer des Votes
     Route::delete('/vote/supprimer/{vote_id}', [VoteController::class, 'destroy'])->name('vote.supprimer');
+
+
+    // ----------------------------------------ACTION PROFIL DU ADMIN COMMUNE -----------------------------------------------
+
+    //Afficher toutes les details de profils du compte du admin_commune
+    Route::get('/admin_commune/afficher/{id}', [UserController::class, 'show']);
+
+    //Modifier les informations de profils du  compte du admin_commune
+    Route::put('/edit/admin_commune/{user}', [UserController::class, 'update']);
+
+    //Archiver les informations un compte admin_commune
+    Route::put('/archive/admin_commune/{user}', [UserController::class, 'archive']);
 });
 
 // ---------------------------------LES ROUTES PUBLIC-------------------------------
@@ -227,6 +312,7 @@ Route::put('/reset/password', [UserController::class, 'resetPassword']);
 
 
 // ---------------------------------LES ACTIONS COMMUN DES DIFFERENTS USERS CONNECTES-------------------------------
+// ---------------------------------LES ACTIONS COMMUN DES DIFFERENTS USERS-------------------------------
 
 Route::middleware(['auth:sanctum'])->group(function () {
 
@@ -236,6 +322,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::patch('/projet/modifier/{projet_id}', [ProjetController::class, 'update'])->name('projet.modifier');
     // Archiver des donnees Projet
     Route::patch('/projet/archiver/etat/{projet_id}', [ProjetController::class, 'archiver'])->name('projet.archiver');
+    Route::patch('/projet/archiver/etat/{projet_id}/{etat}', [ProjetController::class, 'archiver'])->name('projet.archiver');
 
     // Pour se deconnecter
     Route::post('/logout', [UserController::class, 'logout']);

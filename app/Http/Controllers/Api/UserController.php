@@ -14,6 +14,11 @@ use App\Http\Requests\EditCitizenRequest;
 use App\Http\Requests\UserRegisterRequest;
 use App\Http\Requests\resetPasswordRequest;
 use App\Models\Ville;
+// use App\Http\Requests\EditCitizenRequest;
+// use Illuminate\Support\Facades\Hash;
+// use App\Http\Requests\LogUserRequest;
+// use App\Http\Requests\resetPasswordRequest;
+// use App\Http\Requests\UserRegisterRequest;
 
 class UserController extends Controller
 {
@@ -66,12 +71,23 @@ class UserController extends Controller
      */
     public function register(UserRegisterRequest $request){
         
+    //     try{
+    //         $user = new User();
+    //          $idCitoyen = Role::where("nom", "Citoyen")->get()->first()->id;
+    //         $user->role_id = $idCitoyen;
+    //         $user->nom = $request->nom;
+    //         $user->prenom = $request->prenom;
+    
+    // public function register(UserRegisterRequest $request){
+        // dd('ok');
         try{
+            // $request->validate($this->rules(), $this->messages());
+            //  dd($request);
             $user = new User();
-             $idCitoyen = Role::where("nom", "Citoyen")->get()->first()->id;
-            $user->role_id = $idCitoyen;
+            $user->role_id = $request->role_id;
             $user->nom = $request->nom;
             $user->prenom = $request->prenom;
+            // $user->age = $request->age;
             $user->email = $request->email;
             $user->password = Hash::make($request->password, [
                 'rounds' =>12
@@ -94,6 +110,10 @@ class UserController extends Controller
             
             $user->save();
             
+            $user->commune_id = $request->commune_id;
+            // dd($user);
+            $user->save();
+            // dd('ok');
             return response()->json([
                 'status_code'=>200,
                 'status_message'=> "Utilisateur enregistré",
@@ -148,6 +168,7 @@ class UserController extends Controller
 
             $user = auth()->user();
             if($user->etat ==  true){
+            if($user->etat ==  "actif"){
                 //  dd($user);
             $token = $user->createToken('SESAM_OUVRE_TOI')->plainTextToken;
             return response()->json([
@@ -169,7 +190,7 @@ class UserController extends Controller
                 'status_message'=> "Informations non valide", 
             ]);
         }
-    }
+    }}
         /**
      * @OA\Post(
      *     path="/logout",
@@ -191,7 +212,8 @@ class UserController extends Controller
      *     }
      * )
      */
-    public function logout(LogOutRequest $request){
+    // public function logout(LogOutRequest $request){
+    public function logout(LogUserRequest $request){
         $request->user()->currentAccessToken()->delete();
         return response()->json([
             'status_code'=>200,
@@ -245,7 +267,9 @@ class UserController extends Controller
      *     }
      * )
      */
+    // public function update(EditCitizenRequest $request, User $user){
     public function update(EditCitizenRequest $request, User $user){
+        // dd($user);
         try{
             $user->role_id = auth()->user()->role_id;
             $user->nom = $request->nom;
@@ -308,14 +332,30 @@ class UserController extends Controller
      *     }
      * )
      */
-    public function archive(Request $request, User $user){
+
+    // public function archive(Request $request, User $user){
+
+    public function show(Request $request , string $id){
+        // dd($user);
+        try{
+            $user = User::findOrFail($id);
+            return $user;
+            
+        }catch(Exception $e){
+            return response()->json($e);
+        }
+    }
+
+    public function archive(User $user){
         try{
             
             // dd($user);
             if($user->id == auth()->user()->id){
                 $user->etat = false;
                 $user->save();
-                $request->user()->currentAccessToken()->delete();
+                $user->user()->currentAccessToken()->delete();
+                $user->etat = "inactif";
+                $user->save();
                 return response()->json([
                     'status_code'=>200,
                     'status_message'=> "La désactivation du compte est réussie"
@@ -369,16 +409,22 @@ class UserController extends Controller
      *     )
      * )
      */
+    // public function resetPassword(resetPasswordRequest $request){
+    //     try{
+           
+    //         if($request->telephone || $request->email){
+                
     public function resetPassword(resetPasswordRequest $request){
         try{
-           
+            // dd('ok');
             if($request->telephone || $request->email){
-                
+                // dd('ok');
                 $email = $request->email;
                 $telephone = $request->telephone;
                 if(User::where('telephone', $telephone)->get()->first()){
                     $user = User::where('telephone', $telephone)->get()->first();
                     
+                    // dd($user->id);
                     $user->password = $request->password;
                     $user->save();
                     return response()->json([

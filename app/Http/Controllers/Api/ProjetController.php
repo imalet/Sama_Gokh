@@ -14,6 +14,11 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use openApi\Annotations as OA;
+// use App\Models\Projet;
+// use App\Models\Role;
+// use App\Models\User;
+// use Illuminate\Http\Request;
+// use Illuminate\Support\Facades\Auth;
 
 class ProjetController extends Controller
 {
@@ -126,6 +131,27 @@ class ProjetController extends Controller
         if ($newData->save()) {
             return response()->json(['message' => 'Insertion réussie'], 200);
          }
+        $newData->image = $request->image;
+        $newData->couts = $request->couts;
+        $newData->delai = $request->delai;
+        $newData->etat = $request->etat;
+        $userConnecte = auth()->user()->id;
+        $roleIdUserConnecte = User::find($userConnecte)->first()->role_id;
+
+        if (Role::where('id', $roleIdUserConnecte)->first()->id === $roleIdUserConnecte) {
+            // dd('ok');
+            if (Role::where('id', $roleIdUserConnecte)->first()->nom == "Citoyen") {
+                $newData->type_projet_id = 2;
+            } elseif (Role::where('id', $roleIdUserConnecte)->first()->nom == "AdminCommune") {
+                $newData->type_projet_id = 1;
+            }
+        }
+        // $newData->type_projet_id = $request->type_projet_id;
+        $newData->etat_projet_id = true;
+
+        if ($newData->save()) {
+            return response()->json(['message' => 'Insertion réussie'], 200);
+        }
 
         return response()->json(['message' => 'Échec de l\'insertion'], 422);
     }
@@ -224,6 +250,19 @@ class ProjetController extends Controller
 
         // 
 
+        $projet->titre = $request->titre;
+        $projet->description = $request->description;
+        $projet->image = $request->image;
+        $projet->couts = $request->couts;
+        $projet->delai = $request->delai;
+        $projet->etat = $request->etat;
+        $projet->type_projet_id = $request->type_projet_id;
+        $projet->etat_projet_id = $request->etat_projet_id;
+
+        if ($projet->save()) {
+            return response('Update Ok', 200);
+        }
+
         return response('BAD Update', 200);
     }
 
@@ -301,6 +340,15 @@ class ProjetController extends Controller
         else{
             return response()->json('Vous ne pouvez pas archiver ce projet', 403);
         }
-        
     }
+        
+    // public function archiver(string $id, string $etat)
+    // {
+
+    //     $projet = Projet::findOrFail($id);
+    //     $projet->etat = $etat;
+    //     $projet->save();
+
+    //     return response('Archiver OK', 200);
+    // }
 }
